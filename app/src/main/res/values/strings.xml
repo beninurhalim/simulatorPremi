@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">PremiSimulation</string>
+    <string name="title_activity_menu_button">MenuButton</string>
+
+    <string name="typevehicle_prompt">Tipe Kendaraan</string>
+    <string-array name="typevehicle_arrays">
+        <item>Bus</item>
+        <item>SUV</item>
+        <item>MPV</item>
+        <item>Pick Up</item>
+        <item>Truck</item>
+    </string-array>
+
+    <string name="zona_prompt">Zona</string>
+    <string-array name="zona_arrays">
+        <item>Zona I (Sumatera dan Kepulauan di sekitarnya)</item>
+        <item>Zona II (DKI Jakarta, Jawa Barat,dan Banten)</item>
+        <item>Zona III (Selain Zona I dan Zona II)</item>
+    </string-array>
+
+    <string name="perlindungan_prompt">Perlindungan</string>
+    <string-array name="perlindungan_arrays">
+        <item>TLO (Total Loss Only)</item>
+        <item>Comperhensive</item>
+    </string-array>
+</resources>

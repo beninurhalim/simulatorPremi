@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">https://beninurhalim.000webhostapp.com/apiPremi.php/API-Mahasiswa-Master/login.php</domain>
+    </domain-config>
+</network-security-config>
