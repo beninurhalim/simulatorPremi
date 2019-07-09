@@ -1,108 +1,146 @@
 package beni.simulatorpremi.activity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.JsonObject;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Calendar;
 
-//import androidx.appcompat.app.AppCompatActivity;
 import beni.simulatorpremi.R;
+import beni.simulatorpremi.util.api.BaseApiService;
+import beni.simulatorpremi.util.api.RetrofitClient;
+import beni.simulatorpremi.util.api.UtilsApi;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Astorsimulation extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private EditText mDisplayDates;
-    private EditText mDisplayDatef;
-    private TextView valuetxt;
-    private TextView valuetxt2;
-    private DatePickerDialog.OnDateSetListener mDateSetListeners;
-    private DatePickerDialog.OnDateSetListener mDateSetListenerf;
-    private   SeekBar sb;
-    private   SeekBar sb2;
-    private CheckBox checkBox2;
-    private CheckBox checkBox3;
-    private Spinner typevehicle;
+    Spinner VehicleType;
+    TextInputEditText ManufactureYear;
+    @BindView(R.id.SDate)
+    EditText SDate;
+    @BindView(R.id.EDate)
+    EditText EDate;
+    DatePickerDialog.OnDateSetListener mDateSetListeners;
+    DatePickerDialog.OnDateSetListener mDateSetListenerf;
+    @BindView(R.id.Zona)
+    Spinner Zona;
+    @BindView(R.id.tlo)
+    Spinner tlo;
+    @BindView(R.id.TSI)
+    TextInputEditText TSI;
+    @BindView(R.id.Coverages)
+    RadioGroup Coverages;
+    CheckBox tjh;
+    SeekBar seekBar1;
+    SeekBar seekBar2;
+    CheckBox tjh_passanger;
+    TextView tjh_amount;
+    TextView tjhp_amount;
+    @BindView(R.id.sbutton)
+    Button sbutton;
 
-
+    BaseApiService mApiService2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_astorsimulation);
 
-        mDisplayDates = (EditText) findViewById(R.id.dates);
-        mDisplayDatef = (EditText) findViewById(R.id.datef);
-        sb = (SeekBar)findViewById(R.id.seekBar1);
-        sb.setEnabled(false);
-        sb2 = (SeekBar)findViewById(R.id.seekBar2);
-        sb2.setEnabled(false);
-        valuetxt2 = (TextView) findViewById(R.id.valuetxt2);
-        valuetxt = (TextView) findViewById(R.id.valuetxt);
-        checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
-        checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
-        typevehicle =(Spinner) findViewById(R.id.typevehicle);
+        ManufactureYear = (TextInputEditText) findViewById(R.id.ManufactureYear);
+        VehicleType =(Spinner) findViewById(R.id.VehicleType);
+        SDate = (EditText) findViewById(R.id.SDate);
+        EDate = (EditText) findViewById(R.id.EDate);
+        seekBar1 = (SeekBar)findViewById(R.id.seekBar1);
+        seekBar1.setEnabled(false);
+        seekBar2 = (SeekBar)findViewById(R.id.seekBar2);
+        seekBar2.setEnabled(false);
+        tjh_amount = (TextView) findViewById(R.id.tjh_amount);
+        tjhp_amount = (TextView) findViewById(R.id.tjhp_amount);
+        tjh = (CheckBox) findViewById(R.id.tjh);
+        tjh_passanger = (CheckBox) findViewById(R.id.tjh_passanger);
+        sbutton = (Button) findViewById(R.id.sbutton);
 
-        simpanData();
-
-
+        tempData();
+        saveData();
+        Klik();
     }
 
-    void simpanData(){
-        typevehicle.setPrompt("Jenis Kendaraan");
+    void Klik(){
+        sbutton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                saveData();
+//                Toast.makeText(getApplicationContext(), VehicleType.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
-        checkBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    void tempData(){
+        VehicleType.setPrompt("Jenis Kendaraan");
+
+        tjh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked) {
-                    sb.setEnabled(true);
+                    seekBar1.setEnabled(true);
                 }
                 else
                 {
-                    sb.setEnabled(false);
+                    seekBar1.setEnabled(false);
                 }
-
             }
         });
 
-        checkBox3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        tjh_passanger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if(isChecked) {
-                    sb2.setEnabled(true);
+                    seekBar2.setEnabled(true);
                 }
                 else
                 {
-                    sb2.setEnabled(false);
+                    seekBar2.setEnabled(false);
                 }
-
             }
         });
 
-
-        sb.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar sb, int progress, boolean fromUser) {
-
                 DecimalFormatSymbols symbols = new DecimalFormatSymbols();
                 symbols.setDecimalSeparator(',');
                 DecimalFormat decimalFormat = new DecimalFormat("Rp ###,###,###,###", symbols);
                 String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress*100000)));
-                valuetxt.setText(prezzo);
+                tjh_amount.setText(prezzo);
             }
 
             @Override
@@ -116,14 +154,14 @@ public class Astorsimulation extends AppCompatActivity {
             }
         });
 
-        sb2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar sb2, int progress, boolean fromUser) {
                 DecimalFormatSymbols symbols = new DecimalFormatSymbols();
                 symbols.setDecimalSeparator(',');
                 DecimalFormat decimalFormat = new DecimalFormat("Rp ###,###,###,###", symbols);
                 String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress*100000)));
-                valuetxt2.setText(prezzo);
+                tjhp_amount.setText(prezzo);
 
             }
 
@@ -138,7 +176,7 @@ public class Astorsimulation extends AppCompatActivity {
             }
         });
 
-        mDisplayDates.setOnClickListener(new View.OnClickListener() {
+        SDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
@@ -165,12 +203,12 @@ public class Astorsimulation extends AppCompatActivity {
                 String date = month + "/" + day + "/" + year;
                 int year2 = year + 1;
                 String date2 = month + "/" + day + "/" + year2;
-                mDisplayDates.setText(date);
-                mDisplayDatef.setText(date2);
+                SDate.setText(date);
+                EDate.setText(date2);
             }
         };
 
-        mDisplayDatef.setOnClickListener(new View.OnClickListener() {
+        EDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar cal = Calendar.getInstance();
@@ -195,9 +233,42 @@ public class Astorsimulation extends AppCompatActivity {
                 Log.d(TAG, "onDateSet: mm/dd/yyy: " + month + "/" + day + "/" + year);
 
                 String date = month + "/" + day + "/" + year;
-                mDisplayDatef.setText(date);
+                EDate.setText(date);
             }
         };
     }
 
+    private void saveData(){
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("VehicleType", VehicleType.getSelectedItem().toString());
+        jsonObject.addProperty("ManufactureYear", ManufactureYear.getText().toString());
+        jsonObject.addProperty("SDate", SDate.getText().toString());
+        jsonObject.addProperty("EDate", EDate.getText().toString());
+
+//        ButterKnife.bind(this);
+//        mContext = this;
+        mApiService2 = UtilsApi.getAPIService2(); // meng-init yang ada di package apihelper
+
+//        RetrofitClient service = getc.create(ApiService.class);
+//        Call<PostResponse> call = service.postData(jsonObject);
+        Call<BaseApiService.PostResponse> call = mApiService2.postData(jsonObject);
+        //calling the apiVehicleType
+        call.enqueue(new Callback<BaseApiService.PostResponse>() {
+            @Override
+            public void onResponse(Call<BaseApiService.PostResponse> call, Response<BaseApiService.PostResponse> response) {
+                //hiding progress dialog
+//                loading.dismiss();
+                if(response.isSuccessful()){
+                    Toast.makeText(getApplicationContext(), "Post submitted Title: "+response.body().getVehicleType()+" Body: "+response.body().getManufactureYear()+" EndData: "+response.body().getSDate()+response.body().getEDate(), Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseApiService.PostResponse> call, Throwable t) {
+//                loading.dismiss();
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

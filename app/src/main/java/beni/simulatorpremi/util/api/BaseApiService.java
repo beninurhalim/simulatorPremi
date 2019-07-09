@@ -1,7 +1,11 @@
 package beni.simulatorpremi.util.api;
 
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -24,6 +28,48 @@ public interface BaseApiService {
     Call<ResponseBody> registerRequest(@Field("nama") String nama,
                                        @Field("email") String email,
                                        @Field("password") String password);
+
+//    POST DATA SIMULATOR
+    @POST("rate")
+    Call<PostResponse> postData(
+        @Body JsonObject body);
+
+    class PostResponse{
+        @SerializedName("VehicleType")
+        private String VehicleType;
+        @SerializedName("ManufactureYear")
+        private String ManufactureYear;
+        @SerializedName("SDate")
+        private String SDate;
+        @SerializedName("EDate")
+        private String EDate;
+
+        public void setVehicleType(String VehicleType){
+            this.VehicleType = VehicleType;
+        }
+        public String getVehicleType(){
+            return VehicleType;
+        }
+        public void setManufactureYear(String ManufactureYear){
+            this.ManufactureYear = ManufactureYear;
+        }
+        public String getManufactureYear(){
+            return ManufactureYear;
+        }
+        public void setSDate(String SDate){
+            this.SDate = SDate;
+        }
+        public String getSDate(){
+            return SDate;
+        }
+        public void setEDate(String EDate){
+            this.EDate = EDate;
+        }
+        public String getEDate(){
+            return EDate;
+        }
+    }
+
 
 //    @GET("semuadosen")
 //    Call<ResponseDosen> getSemuaDosen();
