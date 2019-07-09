@@ -19,9 +19,7 @@ import butterknife.ButterKnife;
 
 public class MenuButton extends Activity {
 
-     Button btn;
-     Button btn2;
-     TextView txt;
+
      Button intentastor;
      Button intentastor2;
      View popupview;
@@ -43,6 +41,7 @@ public class MenuButton extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_button);
         scroll=(ScrollView) findViewById(R.id.scroll);
+        scroll.setVisibility(View.INVISIBLE);
         astordes=(TextView) findViewById(R.id.astordes1);
         ButterKnife.bind(this);
         sharedPrefManager = new SharedPrefManager(this);
@@ -61,21 +60,18 @@ public class MenuButton extends Activity {
 
         ibtn =(ImageButton) findViewById(R.id.btnastor);
         ibtn2 =(ImageButton) findViewById(R.id.btnaspri);
-        txt =(TextView) findViewById(R.id.deskripsi);
+
         intentastor =(Button) findViewById(R.id.lanjut);
-        intentastor.setEnabled(false);
+        intentastor.setVisibility(View.INVISIBLE);
 //        popupview = LayoutInflater.from(this).inflate(R.layout.popup_astor, null);
 
             ibtn.setOnClickListener(new View.OnClickListener(){
-
-                {
-                    intentastor.setEnabled(true);
-                }
             @Override
             public void onClick(View v){
 
+                scroll.setVisibility(View.VISIBLE);
+                intentastor.setVisibility(View.VISIBLE);
 
-                txt.setText("Ästor adalah asuransi bla bla");
                 intentastor.setOnClickListener(new View.OnClickListener(){
                     public void onClick(View v){
 
@@ -89,13 +85,13 @@ public class MenuButton extends Activity {
 
         ibtn2.setOnClickListener(new View.OnClickListener(){
 
-            {
-                intentastor.setEnabled(true);
-            }
+
             @Override
             public void onClick(View v){
 
-                txt.setText("Ästor adalah asuransi bla bla bla");
+                scroll.setVisibility(View.INVISIBLE);
+                intentastor.setVisibility(View.INVISIBLE);
+
                 intentastor.setOnClickListener(new View.OnClickListener(){
                     public void onClick(View v){
 
