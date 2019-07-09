@@ -57,19 +57,24 @@ public class Astorsimulation extends AppCompatActivity {
         checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
         typevehicle =(Spinner) findViewById(R.id.typevehicle);
 
+        simpanData();
 
+
+    }
+
+    void simpanData(){
         typevehicle.setPrompt("Jenis Kendaraan");
 
         checkBox2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-               if(isChecked) {
-                   sb.setEnabled(true);
-               }
-               else
-               {
-                   sb.setEnabled(false);
-               }
+                if(isChecked) {
+                    sb.setEnabled(true);
+                }
+                else
+                {
+                    sb.setEnabled(false);
+                }
 
             }
         });
@@ -97,7 +102,7 @@ public class Astorsimulation extends AppCompatActivity {
                 symbols.setDecimalSeparator(',');
                 DecimalFormat decimalFormat = new DecimalFormat("Rp ###,###,###,###", symbols);
                 String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress*100000)));
-                 valuetxt.setText(prezzo);
+                valuetxt.setText(prezzo);
             }
 
             @Override
@@ -193,8 +198,6 @@ public class Astorsimulation extends AppCompatActivity {
                 mDisplayDatef.setText(date);
             }
         };
-
-
     }
 
 }
