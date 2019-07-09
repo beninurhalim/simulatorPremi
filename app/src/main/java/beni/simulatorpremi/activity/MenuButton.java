@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import beni.simulatorpremi.R;
@@ -25,11 +26,14 @@ public class MenuButton extends Activity {
      Button intentastor2;
      View popupview;
      ImageButton ibtn;
+     ImageButton ibtn2;
+     ScrollView scroll;
+     TextView astordes;
 
     @BindView(R.id.tvResultNama)
     TextView tvResultNama;
     @BindView(R.id.btnLogout)
-    Button btnLogout;
+    ImageButton btnLogout;
 
     SharedPrefManager sharedPrefManager;
 
@@ -38,7 +42,8 @@ public class MenuButton extends Activity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_button);
-
+        scroll=(ScrollView) findViewById(R.id.scroll);
+        astordes=(TextView) findViewById(R.id.astordes1);
         ButterKnife.bind(this);
         sharedPrefManager = new SharedPrefManager(this);
 
@@ -55,8 +60,7 @@ public class MenuButton extends Activity {
         });
 
         ibtn =(ImageButton) findViewById(R.id.btnastor);
-        btn =(Button) findViewById(R.id.button2);
-
+        ibtn2 =(ImageButton) findViewById(R.id.btnaspri);
         txt =(TextView) findViewById(R.id.deskripsi);
         intentastor =(Button) findViewById(R.id.lanjut);
         intentastor.setEnabled(false);
@@ -83,7 +87,7 @@ public class MenuButton extends Activity {
             });
 
 
-        btn.setOnClickListener(new View.OnClickListener(){
+        ibtn2.setOnClickListener(new View.OnClickListener(){
 
             {
                 intentastor.setEnabled(true);
