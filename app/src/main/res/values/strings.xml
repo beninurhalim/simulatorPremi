@@ -23,4 +23,11 @@
         <item>TLO (Total Loss Only)</item>
         <item>Comperhensive</item>
     </string-array>
+
+    <string name="astordes1">Kendaraan Anda, adalah teman setia yang selalu mengantar kemanapun Anda pergi. Namun saat ini risiko kecelakaan akibat tabrakan, perbuatan jahat orang lain, kebakaran atau bahkan risiko akibat kendaraan Anda menabrak pihak ketiga dapat terjadi kapan saja.</string>
+    <string name="astordes2">JP-ASTOR dapat menjamin risiko-risiko kerusakan dan atau kehilangan dari kendaraan itu sendiri, Assesories kendaraan, Tanggung Jawab Hukum kepada pihak ke III (apabila kendaraan Anda menabrak pihak lain). Risiko Kecelakaan pada penumpang, pengemudi atau Tanggung Jawab Hukum kepada penumpang.</string>
+    <string name="astordes3">Mungkin anda sudah berhati-hati, tetapi orang lain belum tentu. Untuk itu jangan pernah mengambil risiko, percayakan asuransi anda pada JP-ASTOR, Asuransi Kendaraan Bermotor dari JP-INSURANCE. Ingat Asuransi Kendaraan bermotor ingat JP-ASTOR.</string>
+    <string name="tlo">Jenis pertanggungan ini memberikan perlindungan dari risiko pencurian kendaraan atau risiko-risiko kerusakan akibat kecelakaan yang biaya perbaikannya memerlukan biaya sama atau lebih dari 75% dari harga kendaraan yang sebenarnya.</string>
+    <string name="compre">Jenis pertanggungan ini menjamin risiko yang lebih luas karena disamping risiko-risiko TLO di atas juga menjamin kerugian / kerusakan sebagian/partial akibat peristiwa-peristiwa yang dijamin dalam polis.</string>
+
 </resources>
