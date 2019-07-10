@@ -95,7 +95,7 @@ public class MenuButton extends Activity {
                 intentastor.setOnClickListener(new View.OnClickListener(){
                     public void onClick(View v){
 
-                        Intent i = new Intent(MenuButton.this,SplashScreen.class);
+                        Intent i = new Intent(MenuButton.this,ResultAstor.class);
                         startActivity(i);
                     }
                 });

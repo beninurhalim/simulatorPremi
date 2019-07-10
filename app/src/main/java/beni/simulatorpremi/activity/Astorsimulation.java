@@ -65,6 +65,7 @@ public class Astorsimulation extends AppCompatActivity {
     CheckBox tjh_passanger;
     TextView tjh_amount;
     TextView tjhp_amount;
+    Button lanjut;
     @BindView(R.id.sbutton)
     Button sbutton;
 
@@ -84,15 +85,17 @@ public class Astorsimulation extends AppCompatActivity {
         seekBar2 = (SeekBar)findViewById(R.id.seekBar2);
         seekBar2.setEnabled(false);
         tjh_amount = (TextView) findViewById(R.id.tjh_amount);
-        tjhp_amount = (TextView) findViewById(R.id.tjhp_amount);
         tjh = (CheckBox) findViewById(R.id.tjh);
         tjh_passanger = (CheckBox) findViewById(R.id.tjh_passanger);
         sbutton = (Button) findViewById(R.id.sbutton);
+        lanjut = (Button) findViewById(R.id.lanjut);
 
         tempData();
         saveData();
         Klik();
+//        Pindah();
     }
+
 
     void Klik(){
         sbutton.setOnClickListener(new View.OnClickListener(){
@@ -100,6 +103,8 @@ public class Astorsimulation extends AppCompatActivity {
             public void onClick(View v){
                 saveData();
 //                Toast.makeText(getApplicationContext(), VehicleType.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+                Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
+                startActivity(i);
             }
         });
     }
@@ -270,5 +275,6 @@ public class Astorsimulation extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+
     }
 }

@@ -16,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Button"
+        android:text="Lanjut"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -24,66 +24,101 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.988" />
 
-    <ImageButton
-        android:id="@+id/btnastor"
-        android:layout_width="169dp"
-        android:layout_height="69dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="84dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@null"
-        android:src="@drawable/astor"
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/scroll"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.079"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-    <ImageButton
-        android:id="@+id/btnaspri"
-        android:layout_width="166dp"
-        android:layout_height="70dp"
+        <ImageButton
+            android:id="@+id/btnastor"
+            android:layout_width="169dp"
+            android:layout_height="69dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@null"
+            android:src="@drawable/astor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.035"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btnaspri"
+            android:layout_width="166dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="5dp"
+            android:background="@null"
+            android:src="@drawable/aspri"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.818"
+            app:layout_constraintStart_toEndOf="@+id/btnastor"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="417dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="84dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:background="@null"
-        android:src="@drawable/aspri"
+        android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.951"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tvResultNama"
-        android:layout_width="110dp"
-        android:layout_height="26dp"
-        android:layout_marginStart="224dp"
-        android:layout_marginLeft="224dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Selamat Datang"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.026" />
+        <TextView
+            android:id="@+id/tvResultNama"
+            android:layout_width="110dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="220dp"
+            android:layout_marginLeft="224dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="Selamat Datang"
+            android:textColor="@color/tabtextcolor"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.026" />
 
-    <ImageButton
-        android:id="@+id/btnLogout"
-        android:layout_width="41dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"
-        android:background="@null"
-        android:src="@android:drawable/ic_lock_power_off"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.011" />
+        <ImageButton
+            android:id="@+id/btnLogout"
+            android:layout_width="41dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="8dp"
+            android:background="@null"
+            android:src="@android:drawable/ic_lock_power_off"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.011" />
+
+    </LinearLayout>
 
     <ScrollView
         android:id="@+id/scroll"
@@ -93,7 +128,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="84dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
