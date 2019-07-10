@@ -16,13 +16,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.JsonObject;
+import beni.simulatorpremi.model.kendaraanModel;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -30,7 +31,6 @@ import java.util.Calendar;
 
 import beni.simulatorpremi.R;
 import beni.simulatorpremi.util.api.BaseApiService;
-import beni.simulatorpremi.util.api.RetrofitClient;
 import beni.simulatorpremi.util.api.UtilsApi;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,20 +45,14 @@ public class Astorsimulation extends AppCompatActivity {
 
     Spinner VehicleType;
     TextInputEditText ManufactureYear;
-    @BindView(R.id.SDate)
     EditText SDate;
-    @BindView(R.id.EDate)
     EditText EDate;
     DatePickerDialog.OnDateSetListener mDateSetListeners;
     DatePickerDialog.OnDateSetListener mDateSetListenerf;
-    @BindView(R.id.Zona)
     Spinner Zona;
-    @BindView(R.id.tlo)
     Spinner tlo;
-    @BindView(R.id.TSI)
     TextInputEditText TSI;
-    @BindView(R.id.Coverages)
-    RadioGroup Coverages;
+    Spinner Coverages;
     CheckBox tjh;
     SeekBar seekBar1;
     SeekBar seekBar2;
@@ -66,8 +60,10 @@ public class Astorsimulation extends AppCompatActivity {
     TextView tjh_amount;
     TextView tjhp_amount;
     Button lanjut;
-    @BindView(R.id.sbutton)
     Button sbutton;
+    RadioGroup Usage;
+    RadioButton rbPribadi;
+    RadioButton rbKomersil;
 
     BaseApiService mApiService2;
 
@@ -77,8 +73,8 @@ public class Astorsimulation extends AppCompatActivity {
         setContentView(R.layout.activity_astorsimulation);
 
         ManufactureYear = (TextInputEditText) findViewById(R.id.ManufactureYear);
-        VehicleType =(Spinner) findViewById(R.id.VehicleType);
-        SDate = (EditText) findViewById(R.id.SDate);
+        VehicleType     =(Spinner) findViewById(R.id.VehicleType);
+        SDate           = (EditText) findViewById(R.id.SDate);
         EDate = (EditText) findViewById(R.id.EDate);
         seekBar1 = (SeekBar)findViewById(R.id.seekBar1);
         seekBar1.setEnabled(false);
@@ -89,6 +85,11 @@ public class Astorsimulation extends AppCompatActivity {
         tjh_passanger = (CheckBox) findViewById(R.id.tjh_passanger);
         sbutton = (Button) findViewById(R.id.sbutton);
         lanjut = (Button) findViewById(R.id.lanjut);
+        Usage = (RadioGroup) findViewById(R.id.Usage);
+        rbPribadi = (RadioButton) findViewById(R.id.rbPribadi);
+        Coverages = (Spinner) findViewById(R.id.Coverages);
+        Zona = (Spinner) findViewById(R.id.Zona);
+        TSI = (TextInputEditText) findViewById(R.id.TSI);
 
         tempData();
         saveData();
@@ -245,23 +246,27 @@ public class Astorsimulation extends AppCompatActivity {
 
     private void saveData(){
 
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("VehicleType", VehicleType.getSelectedItem().toString());
-        jsonObject.addProperty("ManufactureYear", ManufactureYear.getText().toString());
-        jsonObject.addProperty("SDate", SDate.getText().toString());
-        jsonObject.addProperty("EDate", EDate.getText().toString());
+        kendaraanModel km = new kendaraanModel(
+                VehicleType.getSelectedItem().toString(),
+                ManufactureYear.getText().toString(),
+                SDate.getText().toString(),
+                EDate.getText().toString(),
+                Coverages.getSelectedItem().toString().split(","),
+                rbPribadi.getText().toString(),
+                Zona.getSelectedItem().toString(),
+                TSI.getText().toString(),
+                true,
+                "10"
 
-//        ButterKnife.bind(this);
-//        mContext = this;
+        );
+
         mApiService2 = UtilsApi.getAPIService2(); // meng-init yang ada di package apihelper
 
-//        RetrofitClient service = getc.create(ApiService.class);
-//        Call<PostResponse> call = service.postData(jsonObject);
-        Call<BaseApiService.PostResponse> call = mApiService2.postData(jsonObject);
+        Call<kendaraanModel> call = mApiService2.postKendaraan(km);
         //calling the apiVehicleType
-        call.enqueue(new Callback<BaseApiService.PostResponse>() {
+        call.enqueue(new Callback<kendaraanModel>() {
             @Override
-            public void onResponse(Call<BaseApiService.PostResponse> call, Response<BaseApiService.PostResponse> response) {
+            public void onResponse(Call<kendaraanModel> call, Response<kendaraanModel> response) {
                 //hiding progress dialog
 //                loading.dismiss();
                 if(response.isSuccessful()){
@@ -270,7 +275,7 @@ public class Astorsimulation extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<BaseApiService.PostResponse> call, Throwable t) {
+            public void onFailure(Call<kendaraanModel> call, Throwable t) {
 //                loading.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
