@@ -20,8 +20,9 @@ public class kendaraanModel {
         private String DecreasingPct;
 
 
+        private additionalModel Additionals;
         public kendaraanModel(String VehicleType, String ManufactureYear, String SDate, String EDate,String[] Coverages, String Usage, String Zona,
-                              String TSI, Boolean IsDecreasing, String DecreasingPct){
+                              String TSI, Boolean IsDecreasing, String DecreasingPct, additionalModel Additionals){
             this.VehicleType = VehicleType;
             this.ManufactureYear = ManufactureYear;
             this.SDate = SDate;
@@ -32,6 +33,7 @@ public class kendaraanModel {
             this.TSI = TSI;
             this.IsDecreasing = IsDecreasing;
             this.DecreasingPct = DecreasingPct;
+            this.Additionals = Additionals;
 
         }
 

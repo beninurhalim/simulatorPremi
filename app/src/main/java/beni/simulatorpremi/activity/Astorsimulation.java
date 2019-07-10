@@ -1,8 +1,6 @@
 package beni.simulatorpremi.activity;
 
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,18 +21,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import beni.simulatorpremi.model.additionalModel;
 import beni.simulatorpremi.model.kendaraanModel;
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Calendar;
-
 import beni.simulatorpremi.R;
 import beni.simulatorpremi.util.api.BaseApiService;
 import beni.simulatorpremi.util.api.UtilsApi;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +36,8 @@ import retrofit2.Response;
 public class Astorsimulation extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+
+    String sFlood,sEQ,sSRCC,sTS,sTjh;
 
     Spinner VehicleType;
     TextInputEditText ManufactureYear;
@@ -52,11 +48,11 @@ public class Astorsimulation extends AppCompatActivity {
     Spinner Zona;
     Spinner tlo;
     TextInputEditText TSI;
+
     Spinner Coverages;
-    CheckBox tjh;
+    CheckBox tjh,flood,tjh_passanger,EQ,SRCC,TS;
     SeekBar seekBar1;
-    SeekBar seekBar2;
-    CheckBox tjh_passanger;
+//    SeekBar seekBar2;
     TextView tjh_amount;
     TextView tjhp_amount;
     Button lanjut;
@@ -75,24 +71,29 @@ public class Astorsimulation extends AppCompatActivity {
         ManufactureYear = (TextInputEditText) findViewById(R.id.ManufactureYear);
         VehicleType     =(Spinner) findViewById(R.id.VehicleType);
         SDate           = (EditText) findViewById(R.id.SDate);
-        EDate = (EditText) findViewById(R.id.EDate);
-        seekBar1 = (SeekBar)findViewById(R.id.seekBar1);
+        EDate           = (EditText) findViewById(R.id.EDate);
+        seekBar1        = (SeekBar)findViewById(R.id.seekBar1);
+//        seekBar2        = (SeekBar)findViewById(R.id.seekBar2);
+        tjh_amount      = (TextView) findViewById(R.id.tjh_amount);
+        tjh             = (CheckBox) findViewById(R.id.tjh);
+        tjh_passanger   = (CheckBox) findViewById(R.id.tjh_passanger);
+        sbutton         = (Button) findViewById(R.id.sbutton);
+        lanjut          = (Button) findViewById(R.id.lanjut);
+        Usage           = (RadioGroup) findViewById(R.id.Usage);
+        rbPribadi       = (RadioButton) findViewById(R.id.rbPribadi);
+        Coverages       = (Spinner) findViewById(R.id.Coverages);
+        Zona            = (Spinner) findViewById(R.id.Zona);
+        TSI             = (TextInputEditText) findViewById(R.id.TSI);
+        flood           = (CheckBox) findViewById(R.id.flood);
+        EQ              = (CheckBox) findViewById(R.id.EQ);
+        SRCC            = (CheckBox) findViewById(R.id.SRCC);
+        TS              = (CheckBox) findViewById(R.id.TS);
         seekBar1.setEnabled(false);
-        seekBar2 = (SeekBar)findViewById(R.id.seekBar2);
-        seekBar2.setEnabled(false);
-        tjh_amount = (TextView) findViewById(R.id.tjh_amount);
-        tjh = (CheckBox) findViewById(R.id.tjh);
-        tjh_passanger = (CheckBox) findViewById(R.id.tjh_passanger);
-        sbutton = (Button) findViewById(R.id.sbutton);
-        lanjut = (Button) findViewById(R.id.lanjut);
-        Usage = (RadioGroup) findViewById(R.id.Usage);
-        rbPribadi = (RadioButton) findViewById(R.id.rbPribadi);
-        Coverages = (Spinner) findViewById(R.id.Coverages);
-        Zona = (Spinner) findViewById(R.id.Zona);
-        TSI = (TextInputEditText) findViewById(R.id.TSI);
+//        seekBar2.setEnabled(false);
 
         tempData();
         saveData();
+        checkBox();
         Klik();
 //        Pindah();
     }
@@ -110,6 +111,19 @@ public class Astorsimulation extends AppCompatActivity {
         });
     }
 
+    void checkBox(){
+        if (flood.isChecked()) {
+            sFlood = "1";
+        }else if(EQ.isChecked()){
+            sEQ = "1";
+        }else if(SRCC.isChecked()){
+            sSRCC = "1";
+        }else if(TS.isChecked()){
+            sTS = "1";
+        }else if(tjh.isChecked()){
+            sTjh="1";
+        }
+    }
     void tempData(){
         VehicleType.setPrompt("Jenis Kendaraan");
 
@@ -126,18 +140,18 @@ public class Astorsimulation extends AppCompatActivity {
             }
         });
 
-        tjh_passanger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked) {
-                    seekBar2.setEnabled(true);
-                }
-                else
-                {
-                    seekBar2.setEnabled(false);
-                }
-            }
-        });
+//        tjh_passanger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+//                if(isChecked) {
+//                    seekBar2.setEnabled(true);
+//                }
+//                else
+//                {
+//                    seekBar2.setEnabled(false);
+//                }
+//            }
+//        });
 
         seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -160,27 +174,27 @@ public class Astorsimulation extends AppCompatActivity {
             }
         });
 
-        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar sb2, int progress, boolean fromUser) {
-                DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-                symbols.setDecimalSeparator(',');
-                DecimalFormat decimalFormat = new DecimalFormat("Rp ###,###,###,###", symbols);
-                String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress*100000)));
-                tjhp_amount.setText(prezzo);
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar sb2) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar sb2) {
-
-            }
-        });
+//        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar sb2, int progress, boolean fromUser) {
+//                DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+//                symbols.setDecimalSeparator(',');
+//                DecimalFormat decimalFormat = new DecimalFormat("Rp ###,###,###,###", symbols);
+//                String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress*100000)));
+//                tjhp_amount.setText(prezzo);
+//
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar sb2) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar sb2) {
+//
+//            }
+//        });
 
         SDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -246,6 +260,20 @@ public class Astorsimulation extends AppCompatActivity {
 
     private void saveData(){
 
+        additionalModel ad = new additionalModel(
+                sFlood,
+                sEQ,
+                sSRCC,
+                sTS,
+                tjh_amount.getText().toString(),
+                "1",
+                "1",
+                tjh_amount.getText().toString(),
+                sTjh,
+                "1"
+
+        );
+
         kendaraanModel km = new kendaraanModel(
                 VehicleType.getSelectedItem().toString(),
                 ManufactureYear.getText().toString(),
@@ -256,7 +284,8 @@ public class Astorsimulation extends AppCompatActivity {
                 Zona.getSelectedItem().toString(),
                 TSI.getText().toString(),
                 true,
-                "10"
+                "10",
+                ad
 
         );
 
@@ -267,8 +296,6 @@ public class Astorsimulation extends AppCompatActivity {
         call.enqueue(new Callback<kendaraanModel>() {
             @Override
             public void onResponse(Call<kendaraanModel> call, Response<kendaraanModel> response) {
-                //hiding progress dialog
-//                loading.dismiss();
                 if(response.isSuccessful()){
                     Toast.makeText(getApplicationContext(), "Post submitted Title: "+response.body().getVehicleType()+" Body: "+response.body().getManufactureYear()+" EndData: "+response.body().getSDate()+response.body().getEDate(), Toast.LENGTH_LONG).show();
                 }
