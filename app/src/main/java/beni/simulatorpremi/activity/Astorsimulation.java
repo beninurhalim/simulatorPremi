@@ -85,6 +85,7 @@ public class Astorsimulation extends AppCompatActivity {
         seekBar2 = (SeekBar)findViewById(R.id.seekBar2);
         seekBar2.setEnabled(false);
         tjh_amount = (TextView) findViewById(R.id.tjh_amount);
+        tjhp_amount = (TextView) findViewById(R.id.tjhp_amount);
         tjh = (CheckBox) findViewById(R.id.tjh);
         tjh_passanger = (CheckBox) findViewById(R.id.tjh_passanger);
         sbutton = (Button) findViewById(R.id.sbutton);
@@ -93,8 +94,8 @@ public class Astorsimulation extends AppCompatActivity {
         tempData();
         saveData();
         Klik();
-//        Pindah();
     }
+
 
 
     void Klik(){
@@ -167,7 +168,6 @@ public class Astorsimulation extends AppCompatActivity {
                 DecimalFormat decimalFormat = new DecimalFormat("Rp ###,###,###,###", symbols);
                 String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress*100000)));
                 tjhp_amount.setText(prezzo);
-
             }
 
             @Override
