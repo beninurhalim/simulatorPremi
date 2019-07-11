@@ -37,7 +37,8 @@ public class Astorsimulation extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    String sFlood,sEQ,sSRCC,sTS,sTjh;
+    int sFlood,sEQ,sSRCC,sTS,sTjh;
+
 
     Spinner VehicleType;
     TextInputEditText ManufactureYear;
@@ -91,9 +92,9 @@ public class Astorsimulation extends AppCompatActivity {
         seekBar1.setEnabled(false);
 //        seekBar2.setEnabled(false);
 
-        tempData();
-        saveData();
-        checkBox();
+//        tempData();
+//        saveData();
+//        checkBox();
         Klik();
 //        Pindah();
     }
@@ -103,27 +104,29 @@ public class Astorsimulation extends AppCompatActivity {
         sbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                tempData();
+                checkBox();
                 saveData();
 //                Toast.makeText(getApplicationContext(), VehicleType.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
-                Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
-                startActivity(i);
+//                Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
+//                startActivity(i);
             }
         });
     }
 
     void checkBox(){
+
+        String r = "";
         if (flood.isChecked()) {
-            sFlood = "1";
-        }else if(EQ.isChecked()){
-            sEQ = "1";
-        }else if(SRCC.isChecked()){
-            sSRCC = "1";
-        }else if(TS.isChecked()){
-            sTS = "1";
-        }else if(tjh.isChecked()){
-            sTjh="1";
+            sFlood = 1;
+        }
+        if (EQ.isChecked()) {
+//            EQ.setText("1");
+            sEQ = 1;
         }
     }
+
+
     void tempData(){
         VehicleType.setPrompt("Jenis Kendaraan");
 
@@ -259,18 +262,19 @@ public class Astorsimulation extends AppCompatActivity {
     }
 
     private void saveData(){
-
-        additionalModel ad = new additionalModel(
+        additionalModel additional = new additionalModel(
+//                flood.getText().toString().trim(),
                 sFlood,
                 sEQ,
-                sSRCC,
-                sTS,
+//                EQ.getText().toString(),
+                SRCC.getText().toString(),
+                TS.getText().toString(),
                 tjh_amount.getText().toString(),
-                "1",
-                "1",
+                1,
+                1,
                 tjh_amount.getText().toString(),
-                sTjh,
-                "1"
+                tjh.getText().toString(),
+                1
 
         );
 
@@ -285,7 +289,7 @@ public class Astorsimulation extends AppCompatActivity {
                 TSI.getText().toString(),
                 true,
                 "10",
-                ad
+                additional
 
         );
 

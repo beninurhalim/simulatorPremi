@@ -3,20 +3,20 @@ package beni.simulatorpremi.model;
 public class additionalModel {
 
 //    kendaraanModel Additionals;
-    String flood;
-    String EQ;
+    int flood;
+    int EQ;
     String SRCC;
     String TS;
     String PA_amount;
-    String PADriver;
-    String PAPassanger;
+    int PADriver;
+    int PAPassanger;
     String tjh_amount;
     String tjh;
-    String tjh_passanger;
+    int tjh_passanger;
 
-    public additionalModel(String flood, String EQ,
-                           String SRCC, String TS, String PA_amount, String PADriver,
-                           String PAPassanger, String tjh_amount, String tjh, String tjh_passanger) {
+    public additionalModel(int flood, int EQ,
+                           String SRCC, String TS, String PA_amount, int PADriver,
+                           int PAPassanger, String tjh_amount, String tjh, int tjh_passanger) {
 //        Additionals = additionals;
         this.flood = flood;
         this.EQ = EQ;
