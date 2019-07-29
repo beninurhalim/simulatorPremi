@@ -334,6 +334,7 @@
             android:layout_width="223dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:checked="true"
             android:text="Pribadi" />
 
         <RadioButton
@@ -431,7 +432,8 @@
             android:id="@+id/TSI"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType=""
+            android:inputType="number"
+            android:text="0"
             android:hint="Total Harga Pertanggungan" />
     </android.support.design.widget.TextInputLayout>
 

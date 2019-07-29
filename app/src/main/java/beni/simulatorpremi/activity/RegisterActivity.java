@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressDialog loading;
 
     Context mContext;
-    BaseApiService mApiService;
+    BaseApiService mApiService2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         mContext = this;
-        mApiService = UtilsApi.getAPIService();
+        mApiService2 = UtilsApi.getAPIService2();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void requestRegister(){
-        mApiService.registerRequest(etNama.getText().toString(),
+        mApiService2.registerRequest(etNama.getText().toString(),
                 etEmail.getText().toString(),
                 etPassword.getText().toString())
                 .enqueue(new Callback<ResponseBody>() {
