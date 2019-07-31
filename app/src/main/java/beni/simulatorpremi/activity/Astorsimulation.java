@@ -1,10 +1,12 @@
 package beni.simulatorpremi.activity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,14 +23,34 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import beni.simulatorpremi.model.additionalModel;
 import beni.simulatorpremi.model.kendaraanModel;
+import beni.simulatorpremi.model.responeJson;
+import beni.simulatorpremi.model.dataResponse;
+
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+
 import beni.simulatorpremi.R;
+import beni.simulatorpremi.util.SharedPrefManager;
 import beni.simulatorpremi.util.api.BaseApiService;
 import beni.simulatorpremi.util.api.UtilsApi;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,9 +59,10 @@ public class Astorsimulation extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    int sFlood,sEQ,sSRCC,sTS,sTjh;
-
-
+    int sFlood,sEQ,sSRCC,sTS,sZona,sTjh;
+    SharedPrefManager sharedPrefManager;
+    String RUsage;
+    ProgressDialog loading;
     Spinner VehicleType;
     TextInputEditText ManufactureYear;
     EditText SDate;
@@ -47,22 +70,28 @@ public class Astorsimulation extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener mDateSetListeners;
     DatePickerDialog.OnDateSetListener mDateSetListenerf;
     Spinner Zona;
-    Spinner tlo;
     TextInputEditText TSI;
+
 
     Spinner Coverages;
     CheckBox tjh,flood,tjh_passanger,EQ,SRCC,TS;
     SeekBar seekBar1;
-//    SeekBar seekBar2;
     TextView tjh_amount;
-    TextView tjhp_amount;
     Button lanjut;
     Button sbutton;
     RadioGroup Usage;
-    RadioButton rbPribadi;
-    RadioButton rbKomersil;
+    RadioButton rbPribadi,rbKomersil;
+    RadioButton radioButton;
 
-    BaseApiService mApiService2;
+    BaseApiService mApiService;
+    private int nilaitjh;
+
+
+    TextView results;
+    String data = "";
+    // URL of object to be parsed
+    String JsonURL = "http://services.jp.co.id/api/rate/astor";
+//    String JsonURL = "https://api.myjson.com/bins/1anjap";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +103,14 @@ public class Astorsimulation extends AppCompatActivity {
         SDate           = (EditText) findViewById(R.id.SDate);
         EDate           = (EditText) findViewById(R.id.EDate);
         seekBar1        = (SeekBar)findViewById(R.id.seekBar1);
-//        seekBar2        = (SeekBar)findViewById(R.id.seekBar2);
-        tjh_amount      = (TextView) findViewById(R.id.tjh_amount);
         tjh             = (CheckBox) findViewById(R.id.tjh);
+        tjh_amount      = (TextView) findViewById(R.id.tjh_amount);
         tjh_passanger   = (CheckBox) findViewById(R.id.tjh_passanger);
         sbutton         = (Button) findViewById(R.id.sbutton);
         lanjut          = (Button) findViewById(R.id.lanjut);
         Usage           = (RadioGroup) findViewById(R.id.Usage);
         rbPribadi       = (RadioButton) findViewById(R.id.rbPribadi);
+        rbKomersil      = (RadioButton) findViewById(R.id.rbKomersial);
         Coverages       = (Spinner) findViewById(R.id.Coverages);
         Zona            = (Spinner) findViewById(R.id.Zona);
         TSI             = (TextInputEditText) findViewById(R.id.TSI);
@@ -89,15 +118,76 @@ public class Astorsimulation extends AppCompatActivity {
         EQ              = (CheckBox) findViewById(R.id.EQ);
         SRCC            = (CheckBox) findViewById(R.id.SRCC);
         TS              = (CheckBox) findViewById(R.id.TS);
+
+
         seekBar1.setEnabled(false);
 //        seekBar2.setEnabled(false);
-
-//        tempData();
-//        saveData();
-//        checkBox();
+        tempData();
         Klik();
-//        Pindah();
     }
+
+    void tes(){
+        // This string will hold the results
+
+        // Defining the Volley request queue that handles the URL request concurrently
+        RequestQueue requestQueue;
+
+        // Creates the Volley request queue
+        requestQueue = Volley.newRequestQueue(this.getApplicationContext());
+
+        // Creating the JsonObjectRequest class called obreq, passing required parameters:
+        //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
+        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, JsonURL,null,
+                // The third parameter Listener overrides the method onResponse() and passes
+                //JSONObject as a parameter
+                new com.android.volley.Response.Listener<JSONObject>() {
+
+                    // Takes the response from the JSON request
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            int i = 1;
+
+                            if (i < 2) {
+                                JSONObject obj = response.getJSONObject("data");
+//
+                                // Retrieves the string labeled "colorName" and "description" from
+                                //the response JSON Object
+                                //and converts them into javascript objects
+                                String premiMin = obj.getString("TotalPremiMin");
+                                String coverage = obj.getString("TotalPremiMax");
+
+                                // Adds strings from object to the "data" string
+                                data += "Premi Minimum: " + premiMin +
+                                        "nDescription : " + coverage;
+
+                                // Adds the data string to the TextView "results"
+                                tjh_amount.setText(data);
+                            }
+                        }
+                        // Try and catch are included to handle any errors due to JSON
+                        catch (JSONException e) {
+                            // If an error occurs, this prints the error to the log
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                // The final parameter overrides the method onErrorResponse() and passes VolleyError
+                //as a parameter
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    // Handles errors that occur due to Volley
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Volley", "Error");
+                    }
+                }
+        );
+        // Adds the JSON object request "obreq" to the request queue
+        requestQueue.add(obreq);
+    }
+
+    //OBJECT TO ARRAY
+
 
 
     void Klik(){
@@ -105,27 +195,73 @@ public class Astorsimulation extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 tempData();
-                checkBox();
+                validasi();
                 saveData();
+
+//                tes();
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
+//                        startActivity(i);
+//                    }
+//                }, 2000);
 //                Toast.makeText(getApplicationContext(), VehicleType.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
-//                Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
-//                startActivity(i);
+
             }
         });
     }
 
-    void checkBox(){
+    void validasi(){
 
-        String r = "";
+//        CHECHBOX
         if (flood.isChecked()) {
             sFlood = 1;
+        }else{
+            sFlood = 0;
         }
         if (EQ.isChecked()) {
 //            EQ.setText("1");
             sEQ = 1;
+        }else{
+            sEQ = 0;
+        }
+        if (SRCC.isChecked()) {
+            sSRCC = 1;
+        }else{
+            sSRCC = 0;
+        }
+        if (TS.isChecked()) {
+            sTS = 1;
+        }else{
+            sTS = 0;
+        }if (tjh.isChecked()) {
+            sTjh = 1;
+        }else{
+            sTjh = 0;
+        }
+
+//        SPINNER
+        if (Zona.getSelectedItem() == "Zona I (Sumatera dan Kepulauan di sekitarnya)"){
+            sZona = 1;
+        }else if (Zona.getSelectedItem() == "Zona II (DKI Jakarta, Jawa Barat,dan Banten)"){
+            sZona = 2;
+        }else{
+            sZona = 3;
+        }
+
+
+
+//        RADIO GROUP
+        int pilih = Usage.getCheckedRadioButtonId();
+        radioButton = (RadioButton) findViewById(pilih);
+        if (radioButton.getText()=="Pribadi"){
+                RUsage = "Pribadi";
+        }else if (radioButton.getText()=="Komersial"){
+                RUsage = "Komersial";
         }
     }
-
 
     void tempData(){
         VehicleType.setPrompt("Jenis Kendaraan");
@@ -133,7 +269,7 @@ public class Astorsimulation extends AppCompatActivity {
         tjh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(isChecked) {
+                if(tjh.isChecked()) {
                     seekBar1.setEnabled(true);
                 }
                 else
@@ -143,19 +279,6 @@ public class Astorsimulation extends AppCompatActivity {
             }
         });
 
-//        tjh_passanger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if(isChecked) {
-//                    seekBar2.setEnabled(true);
-//                }
-//                else
-//                {
-//                    seekBar2.setEnabled(false);
-//                }
-//            }
-//        });
-
         seekBar1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar sb, int progress, boolean fromUser) {
@@ -163,7 +286,8 @@ public class Astorsimulation extends AppCompatActivity {
                 symbols.setDecimalSeparator(',');
                 DecimalFormat decimalFormat = new DecimalFormat("Rp ###,###,###,###", symbols);
                 String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress*100000)));
-                tjh_amount.setText(prezzo);
+                nilaitjh = Integer.parseInt(String.valueOf(progress*100000));
+                        tjh_amount.setText(prezzo);
             }
 
             @Override
@@ -177,27 +301,6 @@ public class Astorsimulation extends AppCompatActivity {
             }
         });
 
-//        seekBar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar sb2, int progress, boolean fromUser) {
-//                DecimalFormatSymbols symbols = new DecimalFormatSymbols();
-//                symbols.setDecimalSeparator(',');
-//                DecimalFormat decimalFormat = new DecimalFormat("Rp ###,###,###,###", symbols);
-//                String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress*100000)));
-//                tjhp_amount.setText(prezzo);
-//
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar sb2) {
-//
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar sb2) {
-//
-//            }
-//        });
 
         SDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,19 +366,16 @@ public class Astorsimulation extends AppCompatActivity {
 
     private void saveData(){
         additionalModel additional = new additionalModel(
-//                flood.getText().toString().trim(),
                 sFlood,
                 sEQ,
-//                EQ.getText().toString(),
-                SRCC.getText().toString(),
-                TS.getText().toString(),
-                tjh_amount.getText().toString(),
+                sSRCC,
+                sTS,
+                10000000,
                 1,
                 1,
-                tjh_amount.getText().toString(),
-                tjh.getText().toString(),
+                nilaitjh,
+                sTjh,
                 1
-
         );
 
         kendaraanModel km = new kendaraanModel(
@@ -284,24 +384,30 @@ public class Astorsimulation extends AppCompatActivity {
                 SDate.getText().toString(),
                 EDate.getText().toString(),
                 Coverages.getSelectedItem().toString().split(","),
-                rbPribadi.getText().toString(),
-                Zona.getSelectedItem().toString(),
-                TSI.getText().toString(),
+                radioButton.getText().toString(),
+                Integer.toString(sZona),
+                Integer.parseInt((TSI).getText().toString()),
                 true,
-                "10",
+                10,
                 additional
-
         );
 
-        mApiService2 = UtilsApi.getAPIService2(); // meng-init yang ada di package apihelper
+        mApiService = UtilsApi.getAPIService2(); // meng-init yang ada di package apihelper
 
-        Call<kendaraanModel> call = mApiService2.postKendaraan(km);
-        //calling the apiVehicleType
+        Call<kendaraanModel> call = mApiService.postKendaraan(km);
+        //calling API
         call.enqueue(new Callback<kendaraanModel>() {
             @Override
             public void onResponse(Call<kendaraanModel> call, Response<kendaraanModel> response) {
+
                 if(response.isSuccessful()){
-                    Toast.makeText(getApplicationContext(), "Post submitted Title: "+response.body().getVehicleType()+" Body: "+response.body().getManufactureYear()+" EndData: "+response.body().getSDate()+response.body().getEDate(), Toast.LENGTH_LONG).show();
+
+                    kendaraanModel dr = response.body();
+//                    List<premiDetail> resultList = response.getResult();
+
+                    Toast.makeText(Astorsimulation.this, "Status "+dr.getAlerts().getMessage(),Toast.LENGTH_SHORT).show();
+//                      Toast.makeText(Astorsimulation.this, "Status "+response.body().getdResponse().getPremiDetail(),Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "POST: "+response.body().getV ehicleType()+" Body: "+response.body().getManufactureYear()+" EndData: "+response.body().getSDate()+response.body().getEDate(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -311,6 +417,6 @@ public class Astorsimulation extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
     }
 }
+

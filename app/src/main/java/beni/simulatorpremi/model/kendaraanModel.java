@@ -1,28 +1,25 @@
 package beni.simulatorpremi.model;
 
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class kendaraanModel {
-        @SerializedName("VehicleType")
         private String VehicleType;
-        @SerializedName("ManufactureYear")
         private String ManufactureYear;
-        @SerializedName("SDate")
         private String SDate;
-        @SerializedName("EDate")
         private String EDate;
-        @SerializedName("Coverages")
         private String[] Coverages;
         private String Usage;
         private String Zona;
-        private String TSI;
+        private int TSI;
         private Boolean IsDecreasing;
-        private String DecreasingPct;
-
+        private int DecreasingPct;
 
         private additionalModel Additionals;
         public kendaraanModel(String VehicleType, String ManufactureYear, String SDate, String EDate,String[] Coverages, String Usage, String Zona,
-                              String TSI, Boolean IsDecreasing, String DecreasingPct, additionalModel Additionals){
+                              int TSI, Boolean IsDecreasing, int DecreasingPct, additionalModel Additionals){
             this.VehicleType = VehicleType;
             this.ManufactureYear = ManufactureYear;
             this.SDate = SDate;
@@ -37,35 +34,53 @@ public class kendaraanModel {
 
         }
 
-        public void setVehicleType(String VehicleType){
-            this.VehicleType = VehicleType;
-        }
-        public String getVehicleType(){
-            return VehicleType;
-        }
-        public void setManufactureYear(String ManufactureYear){
-            this.ManufactureYear = ManufactureYear;
-        }
-        public String getManufactureYear(){
-            return ManufactureYear;
-        }
-        public void setSDate(String SDate){
-            this.SDate = SDate;
-        }
-        public String getSDate(){
-            return SDate;
-        }
-        public void setEDate(String EDate){
-            this.EDate = EDate;
-        }
-        public String getEDate(){
-            return EDate;
-        }
-        public void setCoverages(String[] Coverages){
-            this.Coverages = Coverages;
-        }
-        public String[] getCoverages(){
-            return Coverages;
-        }
+    @SerializedName("PremiDetail")
+    private ArrayList<premiDetail> mResult;
 
+    public ArrayList<premiDetail> getResult() {
+        return mResult;
+    }
+
+    public void setResult(ArrayList<premiDetail> PremiDetail) {
+        mResult = PremiDetail;
+    }
+
+
+// RESPONSE JSON
+    String error;
+    Alerts alerts;
+    String total_data;
+    dataResponse data;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public Alerts getAlerts() {
+        return alerts;
+    }
+
+    public void setAlerts(Alerts alerts) {
+        this.alerts = alerts;
+    }
+
+    public String getTotal_data() {
+        return total_data;
+    }
+
+    public void setTotal_data(String total_data) {
+        this.total_data = total_data;
+    }
+
+    public dataResponse getdResponse() {
+        return data;
+    }
+
+    public void setdResponse(dataResponse dResponse) {
+        this.data = dResponse;
+    }
 }
