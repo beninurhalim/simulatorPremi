@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class SharedPrefManager {
 
-    public static final String SP_MAHASISWA_APP = "spMahasiswaApp";
+    public static final String SP_PREMI_APP= "spPremiApp";
 
     public static final String SP_NAMA = "spNama";
     public static final String SP_EMAIL = "spEmail";
@@ -16,7 +16,7 @@ public class SharedPrefManager {
     SharedPreferences.Editor spEditor;
 
     public SharedPrefManager(Context context){
-        sp = context.getSharedPreferences(SP_MAHASISWA_APP, Context.MODE_PRIVATE);
+        sp = context.getSharedPreferences(SP_PREMI_APP, Context.MODE_PRIVATE);
         spEditor = sp.edit();
     }
 

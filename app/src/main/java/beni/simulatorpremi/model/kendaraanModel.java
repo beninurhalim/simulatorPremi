@@ -1,6 +1,10 @@
 package beni.simulatorpremi.model;
 
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+
 public class kendaraanModel {
         private String VehicleType;
         private String ManufactureYear;
@@ -12,7 +16,6 @@ public class kendaraanModel {
         private int TSI;
         private Boolean IsDecreasing;
         private int DecreasingPct;
-
 
         private additionalModel Additionals;
         public kendaraanModel(String VehicleType, String ManufactureYear, String SDate, String EDate,String[] Coverages, String Usage, String Zona,
@@ -31,4 +34,53 @@ public class kendaraanModel {
 
         }
 
+    @SerializedName("PremiDetail")
+    private ArrayList<premiDetail> mResult;
+
+    public ArrayList<premiDetail> getResult() {
+        return mResult;
+    }
+
+    public void setResult(ArrayList<premiDetail> PremiDetail) {
+        mResult = PremiDetail;
+    }
+
+
+// RESPONSE JSON
+    String error;
+    Alerts alerts;
+    String total_data;
+    dataResponse data;
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public Alerts getAlerts() {
+        return alerts;
+    }
+
+    public void setAlerts(Alerts alerts) {
+        this.alerts = alerts;
+    }
+
+    public String getTotal_data() {
+        return total_data;
+    }
+
+    public void setTotal_data(String total_data) {
+        this.total_data = total_data;
+    }
+
+    public dataResponse getdResponse() {
+        return data;
+    }
+
+    public void setdResponse(dataResponse dResponse) {
+        this.data = dResponse;
+    }
 }

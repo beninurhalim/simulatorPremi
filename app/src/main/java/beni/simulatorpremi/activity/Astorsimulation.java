@@ -1,10 +1,10 @@
 package beni.simulatorpremi.activity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
@@ -35,6 +35,10 @@ import org.json.JSONObject;
 
 import beni.simulatorpremi.model.additionalModel;
 import beni.simulatorpremi.model.kendaraanModel;
+import beni.simulatorpremi.model.responeJson;
+import beni.simulatorpremi.model.dataResponse;
+
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
@@ -43,8 +47,10 @@ import java.util.Iterator;
 import java.util.List;
 
 import beni.simulatorpremi.R;
+import beni.simulatorpremi.util.SharedPrefManager;
 import beni.simulatorpremi.util.api.BaseApiService;
 import beni.simulatorpremi.util.api.UtilsApi;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,9 +60,9 @@ public class Astorsimulation extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     int sFlood,sEQ,sSRCC,sTS,sZona,sTjh;
-
+    SharedPrefManager sharedPrefManager;
     String RUsage;
-
+    ProgressDialog loading;
     Spinner VehicleType;
     TextInputEditText ManufactureYear;
     EditText SDate;
@@ -65,6 +71,7 @@ public class Astorsimulation extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener mDateSetListenerf;
     Spinner Zona;
     TextInputEditText TSI;
+
 
     Spinner Coverages;
     CheckBox tjh,flood,tjh_passanger,EQ,SRCC,TS;
@@ -179,6 +186,9 @@ public class Astorsimulation extends AppCompatActivity {
         requestQueue.add(obreq);
     }
 
+    //OBJECT TO ARRAY
+
+
 
     void Klik(){
         sbutton.setOnClickListener(new View.OnClickListener(){
@@ -187,19 +197,17 @@ public class Astorsimulation extends AppCompatActivity {
                 tempData();
                 validasi();
                 saveData();
-                tes();
 
-
-
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
-                        startActivity(i);
-                    }
-                }, 3000);
-////                Toast.makeText(getApplicationContext(), VehicleType.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+//                tes();
+//                new Handler().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//
+//                        Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
+//                        startActivity(i);
+//                    }
+//                }, 2000);
+//                Toast.makeText(getApplicationContext(), VehicleType.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
 
             }
         });
@@ -357,8 +365,6 @@ public class Astorsimulation extends AppCompatActivity {
     }
 
     private void saveData(){
-//
-//        nilaiTSI = (int) Integer.parseInt(String.valueOf(TSI));
         additionalModel additional = new additionalModel(
                 sFlood,
                 sEQ,
@@ -369,7 +375,6 @@ public class Astorsimulation extends AppCompatActivity {
                 1,
                 nilaitjh,
                 sTjh,
-//                nilaitjh,
                 1
         );
 
@@ -387,18 +392,22 @@ public class Astorsimulation extends AppCompatActivity {
                 additional
         );
 
-        mApiService = UtilsApi.getAPIService(); // meng-init yang ada di package apihelper
+        mApiService = UtilsApi.getAPIService2(); // meng-init yang ada di package apihelper
 
         Call<kendaraanModel> call = mApiService.postKendaraan(km);
         //calling API
         call.enqueue(new Callback<kendaraanModel>() {
             @Override
             public void onResponse(Call<kendaraanModel> call, Response<kendaraanModel> response) {
+
                 if(response.isSuccessful()){
-                    String a="";
-                    a = response.toString();
-//                    TSI.setText(a);
-//                    Toast.makeText(getApplicationContext(), "POST: "+response.body().getVehicleType()+" Body: "+response.body().getManufactureYear()+" EndData: "+response.body().getSDate()+response.body().getEDate(), Toast.LENGTH_LONG).show();
+
+                    kendaraanModel dr = response.body();
+//                    List<premiDetail> resultList = response.getResult();
+
+                    Toast.makeText(Astorsimulation.this, "Status "+dr.getAlerts().getMessage(),Toast.LENGTH_SHORT).show();
+//                      Toast.makeText(Astorsimulation.this, "Status "+response.body().getdResponse().getPremiDetail(),Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "POST: "+response.body().getV ehicleType()+" Body: "+response.body().getManufactureYear()+" EndData: "+response.body().getSDate()+response.body().getEDate(), Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -408,8 +417,6 @@ public class Astorsimulation extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-
-
-
     }
 }
+

@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
         mContext = this;
-        mApiService2 = UtilsApi.getAPIService2();
+        mApiService2 = UtilsApi.getAPIService();
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override

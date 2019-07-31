@@ -2,8 +2,8 @@ package beni.simulatorpremi.util.api;
 
 public class UtilsApi {
 
-    public static final String BASE_URL_API = "http://services.jp.co.id/api/rate/";
-//    public static final String BASE_URL_API = "http://beninurhalim.000webhostapp.com/API-Mahasiswa-master/";
+//    public static final String BASE_URL_API = "http://services.jp.co.id/api/rate/";
+    public static final String BASE_URL_API = "http://beninurhalim.000webhostapp.com/API-Mahasiswa-master/";
     public static final String BASE_URL_API2 = "http://services.jp.co.id/api/rate/";
 
     // Mendeklarasikan Interface BaseApiService
