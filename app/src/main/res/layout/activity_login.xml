@@ -18,10 +18,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="24sp"
+            android:fontFamily="Futura Md Bt"
+            android:text="Welcome"
             android:textColor="#fff"
-            android:fontFamily="sans-serif"
-            android:text="LOGIN"/>
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="Futura Md Bt"
+            android:text="Please login here !"
+            android:textColor="#fff"
+            android:textSize="15sp"
+            android:layout_marginBottom="35dp"/>
 
         <EditText
             android:id="@+id/etEmail"

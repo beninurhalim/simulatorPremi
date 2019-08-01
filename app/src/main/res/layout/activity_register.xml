@@ -20,19 +20,30 @@
             android:textSize="24sp"
             android:textColor="#fff"
             android:fontFamily="sans-serif"
-            android:text="REGISTER"/>
+            android:text="Welcome" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="15sp"
+            android:textColor="#fff"
+            android:fontFamily="sans-serif"
+            android:text="Register Here !"
+            android:layout_marginBottom="35dp"/>
 
         <EditText
             android:id="@+id/etNama"
-            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nama"
-            android:textColorHint="#80FFFFFF"
-            android:padding="8dp"
-            android:inputType="textPersonName"
+            android:layout_marginTop="8dp"
             android:background="@drawable/bg_rectangle_edittext"
-            android:textColor="#80FFFFFF"/>
+            android:hint="Nama"
+            android:inputType="textPersonName"
+            android:padding="8dp"
+            android:textColor="#80FFFFFF"
+            android:textColorHint="#80FFFFFF" />
 
         <EditText
             android:id="@+id/etEmail"
