@@ -26,7 +26,8 @@
         <activity
             android:name=".activity.Astorsimulation"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.MenuButton" />
+        <activity android:name=".activity.MenuButton"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.MainActivity" />
 
