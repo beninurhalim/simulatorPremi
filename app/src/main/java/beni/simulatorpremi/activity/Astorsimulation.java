@@ -8,6 +8,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -34,23 +36,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import beni.simulatorpremi.model.additionalModel;
-import beni.simulatorpremi.model.kendaraanModel;
-import beni.simulatorpremi.model.responeJson;
 import beni.simulatorpremi.model.dataResponse;
+import beni.simulatorpremi.model.responeJson;
+import beni.simulatorpremi.model.kendaraanModel;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import beni.simulatorpremi.R;
+import beni.simulatorpremi.model.premiDetail;
 import beni.simulatorpremi.util.SharedPrefManager;
 import beni.simulatorpremi.util.api.BaseApiService;
 import beni.simulatorpremi.util.api.UtilsApi;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,7 +85,7 @@ public class Astorsimulation extends AppCompatActivity {
     BaseApiService mApiService;
     private int nilaitjh;
 
-
+    String sr;
     TextView results;
     String data = "";
     // URL of object to be parsed
@@ -95,6 +94,9 @@ public class Astorsimulation extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_astorsimulation);
 
@@ -194,19 +196,30 @@ public class Astorsimulation extends AppCompatActivity {
         sbutton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                tempData();
+//                tempData();
+
                 validasi();
                 saveData();
 
-//                tes();
-//                new Handler().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
-//                        startActivity(i);
-//                    }
-//                }, 2000);
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+
+                        String sessionId = "Test";
+                        Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
+                        i.putExtra("et", sr);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("et", sr);
+// set Fragmentclass Arguments
+                        FragmentMaxPremi fragobj = new FragmentMaxPremi();
+                        fragobj.setArguments(bundle);
+                        startActivity(i);
+                    }
+                }, 2000);
 //                Toast.makeText(getApplicationContext(), VehicleType.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
 
             }
@@ -399,13 +412,31 @@ public class Astorsimulation extends AppCompatActivity {
         call.enqueue(new Callback<kendaraanModel>() {
             @Override
             public void onResponse(Call<kendaraanModel> call, Response<kendaraanModel> response) {
-
+                 sr = response.body().getdResponse().getTotalPremiMax();
                 if(response.isSuccessful()){
 
-                    kendaraanModel dr = response.body();
-//                    List<premiDetail> resultList = response.getResult();
+//                    COBA AMBIL LIST
+                    List<responeJson> resultList = response.body().getResult();
+//                    COBA AMBIL 1 SAJA
+//                    int a = response.body().getdResponse().getPremiDetail().length;
+//                    System.out.println(resultList);
 
-                    Toast.makeText(Astorsimulation.this, "Status "+dr.getAlerts().getMessage(),Toast.LENGTH_SHORT).show();
+//                    try {
+//
+//                        int a = response.body().getdResponse().getPremiDetail().length;
+//                        JSONArray jsonArray = new JSONArray();
+//                        JSONObject object = jsonArray.getJSONObject(0);
+//                        JSONObject date = object.getJSONObject("data");
+//                        JSONArray arrayContacts = date.getJSONArray("PremiDetail");
+//                        for(int i = 0; i<arrayContacts.length();i++){
+//                            JSONObject contactObject = arrayContacts.getJSONObject(i);
+//                            System.out.println(contactObject.getString("Coverage"));
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+
+                    Toast.makeText(Astorsimulation.this, "Status "+ sr,Toast.LENGTH_SHORT).show();
 //                      Toast.makeText(Astorsimulation.this, "Status "+response.body().getdResponse().getPremiDetail(),Toast.LENGTH_SHORT).show();
 //                    Toast.makeText(getApplicationContext(), "POST: "+response.body().getV ehicleType()+" Body: "+response.body().getManufactureYear()+" EndData: "+response.body().getSDate()+response.body().getEDate(), Toast.LENGTH_LONG).show();
                 }

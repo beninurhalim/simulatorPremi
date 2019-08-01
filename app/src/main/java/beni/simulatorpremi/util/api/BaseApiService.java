@@ -36,9 +36,4 @@ public interface BaseApiService {
             @Body kendaraanModel kendaraan);
 
 
-    @FormUrlEncoded
-    @POST("astor")
-    Call<ResponseBody> ambil(@Field("code") String code,
-                                    @Field("message") String message);
-
 }

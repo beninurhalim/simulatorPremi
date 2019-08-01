@@ -35,13 +35,13 @@ public class kendaraanModel {
         }
 
     @SerializedName("PremiDetail")
-    private ArrayList<premiDetail> mResult;
+    private ArrayList<responeJson> mResult;
 
-    public ArrayList<premiDetail> getResult() {
+    public ArrayList<responeJson> getResult() {
         return mResult;
     }
 
-    public void setResult(ArrayList<premiDetail> PremiDetail) {
+    public void setResult(ArrayList<responeJson> PremiDetail) {
         mResult = PremiDetail;
     }
 
