@@ -49,7 +49,7 @@ public class premiDetail {
     @SerializedName("Rate_Bawah")
     String Rate_Bawah;
     @SerializedName("TahunKe")
-    String TahunKe;
+    int TahunKe;
     @SerializedName("TotalPremiBawah")
     String TotalPremiBawah;
     @SerializedName("TotalPremiAtas")
@@ -231,11 +231,11 @@ public class premiDetail {
         Rate_Bawah = rate_Bawah;
     }
 
-    public String getTahunKe() {
+    public int getTahunKe() {
         return TahunKe;
     }
 
-    public void setTahunKe(String tahunKe) {
+    public void setTahunKe(int tahunKe) {
         TahunKe = tahunKe;
     }
 

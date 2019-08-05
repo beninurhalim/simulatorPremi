@@ -1,19 +1,20 @@
 package beni.simulatorpremi.model;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class dataResponse {
     @SerializedName("TotalPremiMin")
     String TotalPremiMin;
     @SerializedName("TotalPremiMax")
     String TotalPremiMax;
-//    @SerializedName("PremiDetail")
-    premiDetail[] PremiDetail;
 
-    private ArrayList<premiDetail> premiList = new ArrayList<>();
-    //getter and setters
+    @SerializedName("PremiDetail")
+    @Expose
+    private ArrayList<Object> PremiDetail = new ArrayList<Object>();
 
     public String getTotalPremiMin() {
         return TotalPremiMin;
@@ -31,7 +32,14 @@ public class dataResponse {
         TotalPremiMax = totalPremiMax;
     }
 
-    public premiDetail[] getPremiDetail() {
+
+    public ArrayList<Object> getPremiDetail() {
         return PremiDetail;
     }
+
+    public void setPremiDetail(ArrayList<Object> premiDetail) {
+        PremiDetail = premiDetail;
+    }
 }
+
+

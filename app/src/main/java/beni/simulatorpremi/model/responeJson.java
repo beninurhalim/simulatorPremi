@@ -6,7 +6,7 @@ public class responeJson {
     String error;
     Alerts alerts;
     String total_data;
-//    dataResponse data;
+    dataResponse data;
 
     public String getError() {
         return error;
@@ -32,11 +32,11 @@ public class responeJson {
         this.total_data = total_data;
     }
 
-//    public dataResponse getdResponse() {
-//        return data;
-//    }
-//
-//    public void setdResponse(dataResponse dResponse) {
-//        this.data = dResponse;
-//    }
+    public dataResponse getdResponse() {
+        return data;
+    }
+
+    public void setdResponse(dataResponse dResponse) {
+        this.data = dResponse;
+    }
 }

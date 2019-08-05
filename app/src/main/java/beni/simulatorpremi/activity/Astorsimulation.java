@@ -8,8 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -24,29 +22,17 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import beni.simulatorpremi.model.additionalModel;
-import beni.simulatorpremi.model.dataResponse;
-import beni.simulatorpremi.model.responeJson;
 import beni.simulatorpremi.model.kendaraanModel;
-
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Calendar;
-import java.util.List;
 
 import beni.simulatorpremi.R;
-import beni.simulatorpremi.model.premiDetail;
 import beni.simulatorpremi.util.SharedPrefManager;
 import beni.simulatorpremi.util.api.BaseApiService;
 import beni.simulatorpremi.util.api.UtilsApi;
@@ -58,10 +44,9 @@ public class Astorsimulation extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    int sFlood,sEQ,sSRCC,sTS,sZona,sTjh;
-    SharedPrefManager sharedPrefManager;
-    String RUsage;
-    ProgressDialog loading;
+    int sFlood, sEQ, sSRCC, sTS, sZona, sTjh, nilaitjh;
+    String RUsage, res;
+    kendaraanModel respon;
     Spinner VehicleType;
     TextInputEditText ManufactureYear;
     EditText SDate;
@@ -70,57 +55,47 @@ public class Astorsimulation extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener mDateSetListenerf;
     Spinner Zona;
     TextInputEditText TSI;
-
-
     Spinner Coverages;
-    CheckBox tjh,flood,tjh_passanger,EQ,SRCC,TS;
+    CheckBox tjh, flood, tjh_passanger, EQ, SRCC, TS;
     SeekBar seekBar1;
-    TextView tjh_amount;
+    TextView tjh_amount, lempar;
     Button lanjut;
     Button sbutton;
     RadioGroup Usage;
-    RadioButton rbPribadi,rbKomersil;
+    RadioButton rbPribadi, rbKomersil;
     RadioButton radioButton;
-
     BaseApiService mApiService;
-    private int nilaitjh;
-
-    String sr;
-    TextView results;
-    String data = "";
-    // URL of object to be parsed
-    String JsonURL = "http://services.jp.co.id/api/rate/astor";
-//    String JsonURL = "https://api.myjson.com/bins/1anjap";
+    String tr="";
+    String r="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_astorsimulation);
 
-        ManufactureYear = (TextInputEditText) findViewById(R.id.ManufactureYear);
-        VehicleType     =(Spinner) findViewById(R.id.VehicleType);
-        SDate           = (EditText) findViewById(R.id.SDate);
-        EDate           = (EditText) findViewById(R.id.EDate);
-        seekBar1        = (SeekBar)findViewById(R.id.seekBar1);
-        tjh             = (CheckBox) findViewById(R.id.tjh);
-        tjh_amount      = (TextView) findViewById(R.id.tjh_amount);
-        tjh_passanger   = (CheckBox) findViewById(R.id.tjh_passanger);
-        sbutton         = (Button) findViewById(R.id.sbutton);
-        lanjut          = (Button) findViewById(R.id.lanjut);
-        Usage           = (RadioGroup) findViewById(R.id.Usage);
-        rbPribadi       = (RadioButton) findViewById(R.id.rbPribadi);
-        rbKomersil      = (RadioButton) findViewById(R.id.rbKomersial);
-        Coverages       = (Spinner) findViewById(R.id.Coverages);
-        Zona            = (Spinner) findViewById(R.id.Zona);
-        TSI             = (TextInputEditText) findViewById(R.id.TSI);
-        flood           = (CheckBox) findViewById(R.id.flood);
-        EQ              = (CheckBox) findViewById(R.id.EQ);
-        SRCC            = (CheckBox) findViewById(R.id.SRCC);
-        TS              = (CheckBox) findViewById(R.id.TS);
 
+
+        ManufactureYear = (TextInputEditText) findViewById(R.id.ManufactureYear);
+        VehicleType = (Spinner) findViewById(R.id.VehicleType);
+        SDate = (EditText) findViewById(R.id.SDate);
+        EDate = (EditText) findViewById(R.id.EDate);
+        seekBar1 = (SeekBar) findViewById(R.id.seekBar1);
+        tjh = (CheckBox) findViewById(R.id.tjh);
+        tjh_amount = (TextView) findViewById(R.id.tjh_amount);
+        tjh_passanger = (CheckBox) findViewById(R.id.tjh_passanger);
+        sbutton = (Button) findViewById(R.id.sbutton);
+        lanjut = (Button) findViewById(R.id.lanjut);
+        Usage = (RadioGroup) findViewById(R.id.Usage);
+        rbPribadi = (RadioButton) findViewById(R.id.rbPribadi);
+        rbKomersil = (RadioButton) findViewById(R.id.rbKomersial);
+        Coverages = (Spinner) findViewById(R.id.Coverages);
+        Zona = (Spinner) findViewById(R.id.Zona);
+        TSI = (TextInputEditText) findViewById(R.id.TSI);
+        flood = (CheckBox) findViewById(R.id.flood);
+        EQ = (CheckBox) findViewById(R.id.EQ);
+        SRCC = (CheckBox) findViewById(R.id.SRCC);
+        TS = (CheckBox) findViewById(R.id.TS);
+        lempar = (TextView) findViewById(R.id.lempar);
 
         seekBar1.setEnabled(false);
 //        seekBar2.setEnabled(false);
@@ -128,165 +103,91 @@ public class Astorsimulation extends AppCompatActivity {
         Klik();
     }
 
-    void tes(){
-        // This string will hold the results
-
-        // Defining the Volley request queue that handles the URL request concurrently
-        RequestQueue requestQueue;
-
-        // Creates the Volley request queue
-        requestQueue = Volley.newRequestQueue(this.getApplicationContext());
-
-        // Creating the JsonObjectRequest class called obreq, passing required parameters:
-        //GET is used to fetch data from the server, JsonURL is the URL to be fetched from.
-        JsonObjectRequest obreq = new JsonObjectRequest(Request.Method.GET, JsonURL,null,
-                // The third parameter Listener overrides the method onResponse() and passes
-                //JSONObject as a parameter
-                new com.android.volley.Response.Listener<JSONObject>() {
-
-                    // Takes the response from the JSON request
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            int i = 1;
-
-                            if (i < 2) {
-                                JSONObject obj = response.getJSONObject("data");
-//
-                                // Retrieves the string labeled "colorName" and "description" from
-                                //the response JSON Object
-                                //and converts them into javascript objects
-                                String premiMin = obj.getString("TotalPremiMin");
-                                String coverage = obj.getString("TotalPremiMax");
-
-                                // Adds strings from object to the "data" string
-                                data += "Premi Minimum: " + premiMin +
-                                        "nDescription : " + coverage;
-
-                                // Adds the data string to the TextView "results"
-                                tjh_amount.setText(data);
-                            }
-                        }
-                        // Try and catch are included to handle any errors due to JSON
-                        catch (JSONException e) {
-                            // If an error occurs, this prints the error to the log
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                // The final parameter overrides the method onErrorResponse() and passes VolleyError
-                //as a parameter
-                new com.android.volley.Response.ErrorListener() {
-                    @Override
-                    // Handles errors that occur due to Volley
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("Volley", "Error");
-                    }
-                }
-        );
-        // Adds the JSON object request "obreq" to the request queue
-        requestQueue.add(obreq);
-    }
-
-    //OBJECT TO ARRAY
-
-
-
-    void Klik(){
-        sbutton.setOnClickListener(new View.OnClickListener(){
+    void Klik() {
+        sbutton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-//                tempData();
-
+            public void onClick(View v) {
                 validasi();
                 saveData();
-
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-
-
-
-                        String sessionId = "Test";
                         Intent i = new Intent(Astorsimulation.this,ResultAstor.class);
-                        i.putExtra("et", sr);
 
-                        Bundle bundle = new Bundle();
-                        bundle.putString("et", sr);
-// set Fragmentclass Arguments
-                        FragmentMaxPremi fragobj = new FragmentMaxPremi();
-                        fragobj.setArguments(bundle);
+                        i.putExtra("tr", lempar.getText().toString());
+//                        i.putExtra("tr", tr);
                         startActivity(i);
                     }
-                }, 2000);
-//                Toast.makeText(getApplicationContext(), VehicleType.getSelectedItem().toString(),Toast.LENGTH_LONG).show();
+                }, 1000);
 
             }
         });
     }
 
-    void validasi(){
+    void validasi() {
 
 //        CHECHBOX
         if (flood.isChecked()) {
             sFlood = 1;
-        }else{
+        } else {
             sFlood = 0;
         }
         if (EQ.isChecked()) {
 //            EQ.setText("1");
             sEQ = 1;
-        }else{
+        } else {
             sEQ = 0;
         }
         if (SRCC.isChecked()) {
             sSRCC = 1;
-        }else{
+        } else {
             sSRCC = 0;
         }
         if (TS.isChecked()) {
             sTS = 1;
-        }else{
+        } else {
             sTS = 0;
-        }if (tjh.isChecked()) {
+        }
+        if (tjh.isChecked()) {
             sTjh = 1;
-        }else{
+        } else {
             sTjh = 0;
         }
 
 //        SPINNER
-        if (Zona.getSelectedItem() == "Zona I (Sumatera dan Kepulauan di sekitarnya)"){
-            sZona = 1;
-        }else if (Zona.getSelectedItem() == "Zona II (DKI Jakarta, Jawa Barat,dan Banten)"){
-            sZona = 2;
-        }else{
-            sZona = 3;
-        }
+        String zzona = Zona.getSelectedItem().toString();
 
+        if (zzona == "Zona I (Sumatera dan Kepulauan di sekitarnya)") {
+            sZona = 1;
+            Toast.makeText(getApplicationContext(),zzona,Toast.LENGTH_SHORT).show();
+        } else if (zzona == "Zona II (DKI Jakarta, Jawa Barat,dan Banten)") {
+            sZona = 2;
+            Toast.makeText(getApplicationContext(),zzona,Toast.LENGTH_SHORT).show();
+        } else {
+            sZona = 3;
+            Toast.makeText(getApplicationContext(),zzona,Toast.LENGTH_SHORT).show();
+        }
 
 
 //        RADIO GROUP
         int pilih = Usage.getCheckedRadioButtonId();
         radioButton = (RadioButton) findViewById(pilih);
-        if (radioButton.getText()=="Pribadi"){
-                RUsage = "Pribadi";
-        }else if (radioButton.getText()=="Komersial"){
-                RUsage = "Komersial";
+        if (radioButton.getText() == "Pribadi") {
+            RUsage = "Pribadi";
+        } else if (radioButton.getText() == "Komersial") {
+            RUsage = "Komersial";
         }
     }
 
-    void tempData(){
+    void tempData() {
         VehicleType.setPrompt("Jenis Kendaraan");
 
         tjh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                if(tjh.isChecked()) {
+                if (tjh.isChecked()) {
                     seekBar1.setEnabled(true);
-                }
-                else
-                {
+                } else {
                     seekBar1.setEnabled(false);
                 }
             }
@@ -298,9 +199,9 @@ public class Astorsimulation extends AppCompatActivity {
                 DecimalFormatSymbols symbols = new DecimalFormatSymbols();
                 symbols.setDecimalSeparator(',');
                 DecimalFormat decimalFormat = new DecimalFormat("Rp ###,###,###,###", symbols);
-                String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress*100000)));
-                nilaitjh = Integer.parseInt(String.valueOf(progress*100000));
-                        tjh_amount.setText(prezzo);
+                String prezzo = decimalFormat.format(Integer.parseInt(String.valueOf(progress * 100000)));
+                nilaitjh = Integer.parseInt(String.valueOf(progress * 100000));
+                tjh_amount.setText(prezzo);
             }
 
             @Override
@@ -327,7 +228,7 @@ public class Astorsimulation extends AppCompatActivity {
                         Astorsimulation.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSetListeners,
-                        year,month,day);
+                        year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -359,7 +260,7 @@ public class Astorsimulation extends AppCompatActivity {
                         Astorsimulation.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         mDateSetListenerf,
-                        year,month,day);
+                        year, month, day);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();
             }
@@ -377,7 +278,7 @@ public class Astorsimulation extends AppCompatActivity {
         };
     }
 
-    private void saveData(){
+    private void saveData() {
         additionalModel additional = new additionalModel(
                 sFlood,
                 sEQ,
@@ -412,42 +313,72 @@ public class Astorsimulation extends AppCompatActivity {
         call.enqueue(new Callback<kendaraanModel>() {
             @Override
             public void onResponse(Call<kendaraanModel> call, Response<kendaraanModel> response) {
-                 sr = response.body().getdResponse().getTotalPremiMax();
-                if(response.isSuccessful()){
 
-//                    COBA AMBIL LIST
-                    List<responeJson> resultList = response.body().getResult();
-//                    COBA AMBIL 1 SAJA
-//                    int a = response.body().getdResponse().getPremiDetail().length;
-//                    System.out.println(resultList);
+                if (response != null) {
+                    respon = response.body();
+                    res = response.body().getAlerts().getMessage();
+                    int array = respon.getdResponse().getPremiDetail().toArray().length;
 
-//                    try {
-//
-//                        int a = response.body().getdResponse().getPremiDetail().length;
-//                        JSONArray jsonArray = new JSONArray();
-//                        JSONObject object = jsonArray.getJSONObject(0);
-//                        JSONObject date = object.getJSONObject("data");
-//                        JSONArray arrayContacts = date.getJSONArray("PremiDetail");
-//                        for(int i = 0; i<arrayContacts.length();i++){
-//                            JSONObject contactObject = arrayContacts.getJSONObject(i);
-//                            System.out.println(contactObject.getString("Coverage"));
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
+                    String premiDetail = response.body().getdResponse().getPremiDetail().toString();
 
-                    Toast.makeText(Astorsimulation.this, "Status "+ sr,Toast.LENGTH_SHORT).show();
-//                      Toast.makeText(Astorsimulation.this, "Status "+response.body().getdResponse().getPremiDetail(),Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(getApplicationContext(), "POST: "+response.body().getV ehicleType()+" Body: "+response.body().getManufactureYear()+" EndData: "+response.body().getSDate()+response.body().getEDate(), Toast.LENGTH_LONG).show();
+                    String tpmin = respon.getdResponse().getTotalPremiMin();
+                    String tpmax = respon.getdResponse().getTotalPremiMax();
+                    Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
+
+
+                    try {
+                        JSONArray jsonArray = new JSONArray(premiDetail);
+                        tr = "Total Premi Min : " + tpmin + "\n";
+                        tr += "Total Premi Max : " + tpmax + "\n\n";
+                        System.out.println(tr);
+                        for(int i=0; i<array ; i++){
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                            tr += "Tahun Ke    : "+jsonObject.getInt("TahunKe") + "\n";
+                            tr += "Coverage    : "+jsonObject.getString("Coverage") + "\n";
+                            tr += "Premi Atas  : "+ jsonObject.getString("Premi_Atas")+ "\n";
+                            tr += "Premi Bawah      : "+ jsonObject.getString("Premi_Bawah")+ "\n";
+                            tr += "Premi Banjir Min : "+ jsonObject.getString("PremiBanjirMin")+ "\n";
+                            tr += "Premi Banjir Max : "+ jsonObject.getString("PremiBanjirMax")+ "\n";
+                            tr += "Premi TSI Min : "+ jsonObject.getString("PremiTSMin")+ "\n";
+                            tr += "Premi TSI Max : "+ jsonObject.getString("PremiTSMax")+ "\n";
+                            tr += "Premi SRCC Min : "+ jsonObject.getString("PremiSRCCMin")+ "\n";
+                            tr += "Premi SRCC Max : "+ jsonObject.getString("PremiSRCCMax")+ "\n";
+                            tr += "Premi EQ Min : "+ jsonObject.getString("PremiEQMin")+ "\n";
+                            tr += "Premi EQ Max : "+ jsonObject.getString("PremiEQMax")+ "\n";
+                            tr += "Sum Insured : "+ jsonObject.getString("SI")+ "\n";
+                            tr += "Rate Atas : "+ jsonObject.getString("Rate_Atas")+ "\n";
+                            tr += "Rate Bawah : "+ jsonObject.getString("Rate_Bawah")+ "\n";
+                            tr += "Total Premi Bawah : "+ jsonObject.getString("TotalPremiBawah")+ "\n";
+                            tr += "Total Premi Atas : "+ jsonObject.getString("TotalPremiAtas")+ "\n\n";
+
+                            System.out.println(tr);
+//                            Toast.makeText(getApplicationContext(),"Jumlah Tahun " + array, Toast.LENGTH_SHORT).show();
+                        }
+                        lempar.append(tr);
+                        lempar.append("\n");
+                        lempar.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                lempar.setText("");
+                            }
+                        }, 2000);
+
+                    } catch (JSONException e) {
+                        Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+
+                    }
+                }else {
+                    Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override
             public void onFailure(Call<kendaraanModel> call, Throwable t) {
-//                loading.dismiss();
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "EROR", Toast.LENGTH_SHORT).show();
             }
         });
     }
 }
-
