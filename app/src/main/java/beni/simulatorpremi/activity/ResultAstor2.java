@@ -20,15 +20,16 @@ public class ResultAstor2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_result_astor);
+        setContentView(R.layout.activity_result_astor2);
         tabLayout = (TabLayout) findViewById(R.id.tabresult);
         appBarLayout = (AppBarLayout) findViewById(R.id.appbarid);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         teksaja = (TextView) findViewById(R.id.teksaja);
         ViewPagerAdapter adapter =  new ViewPagerAdapter(getSupportFragmentManager());
 
+
         Intent intent = getIntent();
-        String tr = intent.getExtras().getString("tr");
+        String tr = intent.getExtras().getString("trb");
         teksaja.setText(tr);
 
 

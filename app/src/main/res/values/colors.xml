@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#8e0018</color>
+    <color name="colorPrimaryDark">#B7250E</color>
+    <color name="colorAccent">#020202</color>
     <color name="tabindicolor">#3F51B5</color>
     <color name="tabtextcolor">#fff</color>
+    <color name="buttoncolorastor">#8e0018</color>
+    <color name="buttoncoloraspri">#008538</color>
 </resources>

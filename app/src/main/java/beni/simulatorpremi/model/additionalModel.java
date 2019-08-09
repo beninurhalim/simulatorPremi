@@ -11,6 +11,7 @@ public class additionalModel {
     int tjh;
     int tjh_passanger;
 
+
     public additionalModel(int flood, int EQ,
                            int SRCC, int TS, int PA_amount, int PADriver,
                            int PAPassanger, int tjh, int nilaitjh,int tjh_passanger) {

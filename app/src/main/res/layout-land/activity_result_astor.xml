@@ -7,7 +7,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarid"
-        android:layout_width="418dp"
+        android:layout_width="741dp"
         android:layout_height="90dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -33,7 +33,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="381dp"
+        android:layout_width="610dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -47,32 +47,32 @@
 
         <Button
             android:id="@+id/bfmin"
-            android:layout_width="fill_parent"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#fff"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
             android:background="@color/colorPrimaryDark"
+            android:textColor="#fff"
             android:text="Tarif Bawah" />
 
         <Button
             android:id="@+id/bfmax"
-            android:layout_width="fill_parent"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="#fff"
             android:background="@color/colorPrimaryDark"
+            android:textColor="#fff"
             android:text="Tarif Atas" />
 
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
-        android:layout_width="365dp"
-        android:layout_height="399dp"
+        android:layout_width="609dp"
+        android:layout_height="132dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
@@ -80,24 +80,25 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>
 
     <TextView
         android:id="@+id/mainData"
-        android:layout_width="386dp"
-        android:layout_height="96dp"
+        android:layout_width="611dp"
+        android:layout_height="80dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="4dp"
         android:text="Beni"
         android:textSize="17sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.777"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent" />
 
     <!--  Frame Layout for placing Fragments  -->

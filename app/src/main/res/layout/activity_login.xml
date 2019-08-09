@@ -15,13 +15,22 @@
         android:orientation="vertical">
 
         <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="24sp"
+        android:textColor="#fff"
+        android:fontFamily="sans-serif"
+        android:text="Welcome"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="24sp"
+            android:textSize="15sp"
             android:textColor="#fff"
             android:fontFamily="sans-serif"
-            android:text="LOGIN"/>
+            android:text="Silahkan Login disini !"/>
 
         <EditText
             android:id="@+id/etEmail"
