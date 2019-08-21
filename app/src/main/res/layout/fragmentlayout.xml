@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_text">
+
+            <TextView
+                android:id="@+id/fragmentText"
+                android:layout_width="148dp"
+                android:layout_height="wrap_content"
+                android:text="Default Text"
+
+                android:textColor="@color/colorAccent"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/fragmentText2"
+                android:layout_width="fill_parent"
+
+                android:textColor="@color/colorAccent"
+                android:layout_height="wrap_content"
+                android:text="Default Text"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

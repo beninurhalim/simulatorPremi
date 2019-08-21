@@ -181,7 +181,8 @@ public class AspriSimulation extends AppCompatActivity {
 //                    rincian += "Premi Biaya Medis : "+df.format(respon.getPremi_BiayaMedis())+"\n";
 //                    rincian += "Premi Evakuasi : "+df.format(respon.getPremi_Evakuasi())+"\n";
 //                    rincian += "Premi Rawat Inap : "+df.format(respon.getPremi_RawatInap())+"\n";
-                        Toast.makeText(getApplicationContext(),meninggal,Toast.LENGTH_SHORT).show();
+                        res = response.body().getAlerts().getMessage();
+                        Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
 
                     }
                     lemparA.setText(TotalPremi);

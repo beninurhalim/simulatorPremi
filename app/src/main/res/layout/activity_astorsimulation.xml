@@ -23,6 +23,19 @@
             android:orientation="vertical">
 
             <CheckBox
+                android:id="@+id/tjh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:checked="true"
+                android:text="TJH3"
+                android:textSize="15dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Usage" />
+
+            <CheckBox
                 android:id="@+id/tjh_passanger"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -38,18 +51,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tjh" />
 
-            <CheckBox
-                android:id="@+id/tjh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:checked="true"
-                android:text="TJH3"
-                android:textSize="15dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/Usage" />
         </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -210,22 +211,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
-        <Spinner
-            android:id="@+id/VehicleType"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="39dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="28dp"
-            android:entries="@array/typevehicle_arrays"
-            android:prompt="@string/typevehicle_prompt"
-            android:text="@string/app_name"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/VehicleType"
+                android:layout_width="wrap_content"
+                android:layout_height="39dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="28dp"
+                android:entries="@array/typevehicle_arrays"
+                android:prompt="@string/typevehicle_prompt"
+                android:text="@string/app_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        </LinearLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/textInputLayout2"
-            android:layout_width="180dp"
+            android:layout_width="match_parent"
             android:layout_height="65dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"

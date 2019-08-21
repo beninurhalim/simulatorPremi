@@ -418,7 +418,7 @@ public class Astorsimulation extends AppCompatActivity {
                         format.setDecimalSeparatorAlwaysShown(false);
                         double tpmin = respon.getdResponse().getTotalPremiMin();
                         double tpmax = respon.getdResponse().getTotalPremiMax();
-                        Toast.makeText(getApplicationContext(),"Status "+res+tpmax,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),res,Toast.LENGTH_SHORT).show();
 
                         try {
                             JSONArray jsonArray = new JSONArray(premiDetail);

@@ -1,5 +1,6 @@
 package beni.simulatorpremi.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +11,8 @@ import android.support.annotation.RequiresApi;
 import android.transition.TransitionManager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
@@ -33,6 +36,8 @@ public class MenuButton extends Activity {
      ScrollView scrollAspri;
      TextView astordes;
 
+     Animation anim;
+
     @BindView(R.id.tvResultNama)
     TextView tvResultNama;
     @BindView(R.id.btnLogout)
@@ -41,6 +46,7 @@ public class MenuButton extends Activity {
     SharedPrefManager sharedPrefManager;
     boolean doubleBackToExitPressedOnce = false;
 
+    @SuppressLint("ResourceType")
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -52,8 +58,11 @@ public class MenuButton extends Activity {
         scrollAspri=(ScrollView) findViewById(R.id.scrollaspri);
         scrollAspri.setVisibility(View.INVISIBLE);
         astordes=(TextView) findViewById(R.id.astordes1);
+        ibtn = (ImageButton) findViewById(R.id.btnastor) ;
         ButterKnife.bind(this);
         sharedPrefManager = new SharedPrefManager(this);
+
+        anim = AnimationUtils.loadAnimation(this,R.xml.animasi);
 
         tvResultNama.setText(sharedPrefManager.getSPNama());
 
@@ -83,15 +92,16 @@ public class MenuButton extends Activity {
                 @Override
                 public void onClick(View v){
                     intentastor.setBackgroundColor(Color.parseColor("#d3263e"));
-                    ibtn.setBackgroundColor(Color.parseColor("#80D86C6C"));
-                    ibtn2.setBackgroundColor(Color.parseColor("#11D86C6C"));
+//                    ibtn.setBackgroundColor(Color.parseColor("#80D86C6C"));
+//                    ibtn2.setBackgroundColor(Color.parseColor("#11D86C6C"));
                     TransitionManager.beginDelayedTransition(popupview);
                     visible = !visible;
                     scrollAspri.setVisibility(View.INVISIBLE);
                     intentaspri.setVisibility(View.INVISIBLE);
                     scrollAstor.setVisibility(View.VISIBLE);
                     intentastor.setVisibility(View.VISIBLE);
-
+                    ibtn.startAnimation(anim);
+                    ibtn2.clearAnimation();
                     intentastor.setOnClickListener(new View.OnClickListener(){
                         public void onClick(View v){
 
@@ -109,15 +119,16 @@ public class MenuButton extends Activity {
             @Override
             public void onClick(View v){
                 intentaspri.setBackgroundColor(Color.parseColor("#18b11f"));
-                ibtn2.setBackgroundColor(Color.parseColor("#80D86C6C"));
-                ibtn.setBackgroundColor(Color.parseColor("#11D86C6C"));
+//                ibtn2.setBackgroundColor(Color.parseColor("#80D86C6C"));
+//                ibtn.setBackgroundColor(Color.parseColor("#11D86C6C"));
                 TransitionManager.beginDelayedTransition(popupview);
                 visible = !visible;
                 scrollAstor.setVisibility(View.INVISIBLE);
                 intentastor.setVisibility(View.INVISIBLE);
                 scrollAspri.setVisibility(View.VISIBLE);
                 intentaspri.setVisibility(View.VISIBLE);
-
+                ibtn2.startAnimation(anim);
+                ibtn.clearAnimation();
                 intentaspri.setOnClickListener(new View.OnClickListener(){
                     public void onClick(View v){
 

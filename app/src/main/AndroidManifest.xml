@@ -16,9 +16,11 @@
         android:hardwareAccelerated="false"
         android:largeHeap="true">
         <activity android:name=".activity.Astor.ResultAstor"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.ResultAstor2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
@@ -35,13 +37,18 @@
         <activity
             android:name=".activity.Aspri.AspriSimulation"
             android:theme="@style/temaAspri"
+            android:screenOrientation="portrait"
             />
         <activity android:name=".activity.MenuButton"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.MainActivity" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activity.Aspri.ResultAspri"
-            android:theme="@style/temaAspri"/>
+            android:theme="@style/temaAspri"
+            android:screenOrientation="portrait"/>
 
     </application>
 
