@@ -8,7 +8,6 @@
         <item>Non Bus Non Truk</item>
         <item>Sepeda Motor</item>
         <item>Truk/PickUp</item>
-        <item>All</item>
     </string-array>
 
     <string name="astordes1">Kendaraan Anda, adalah teman setia yang selalu mengantar kemanapun Anda pergi. Namun saat ini risiko kecelakaan akibat tabrakan, perbuatan jahat orang lain, kebakaran atau bahkan risiko akibat kendaraan Anda menabrak pihak ketiga dapat terjadi kapan saja.</string>
@@ -30,5 +29,31 @@
         <item>Comprehensive</item>
     </string-array>
 
+
+    <string name="aspriclass_prompt">Kelas</string>
+    <string-array name="aspriclass_arrays">
+        <item>Kelas I</item>
+        <item>Kelas II</item>
+        <item>Kelas III</item>
+        <item>Kelas IV</item>
+        <item>Kelas V</item>
+    </string-array>
+
+    <string name="aspripruductid_prompt">Paket Perlindungan</string>
+    <string-array name="aspripruductid_arrays">
+        <item>Standard</item>
+        <!--<item>Gold</item>-->
+        <!--<item>Platinum</item>-->
+    </string-array>
+
+    <string name="asprides1">Kecelakaan, dapat terjadi dimana saja, dan bersifat tiba-tiba. Tidak hanya di jalan raya tapi juga di rumah, di tempat kerja, pusat keramaian atau banyak tempat lainnya. Anda tidak akan pernah menduga apa yang akan terjadi.</string>
+    <string name="asprides2">JP-ASPRI adalah solusi yang tepat untuk memberikan perlindungan bagi Anda, orang-orang yang Anda sayangi, karyawan Anda ataupun rekan-rekan Anda dari risiko kecelakaan, karena JP-ASPRI tidak hanya melindungi di tempat kerja atau di sekolah, tetapi selama 24 jam dimana saja berada. Jangan menunggu waktu percayakan sepenuhnya perlindungan asuransi kecelakaan pribadi pada JP-ASPRI, produk asuransi terpercaya dari JP-INSURANCE.</string>
+    <string name="aspriklaim">Tertanggung sesegera mungkin melaporkan/menyampaikan keterangan tertulis mengenai kerugian yang terjadi dengan tidak merubah/merusak objek yang mengalami kerugian. Pengajuan klaim dilakukan dengan:
+        Mengisi formulir Laporan Klaim Asuransi Kecelakaan Diri (LK1)
+        Melampirkan kwitansi biaya pengobatan
+        Melampirkan surat kematian, copy Kartu Keluarga dan KTP khusus untuk meninggal dunia
+        Untuk korban cacat tetap dilengkapi dengan laporan kesehatan terakhir dari dokter.
+        Dokumen pendukung lainnya yang diperlukan
+    </string>
 
 </resources>

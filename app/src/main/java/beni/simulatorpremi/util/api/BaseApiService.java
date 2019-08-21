@@ -1,17 +1,13 @@
 package beni.simulatorpremi.util.api;
 
-import java.util.List;
-
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import beni.simulatorpremi.model.kendaraanModel;
-import beni.simulatorpremi.model.premiDetail;
+import beni.simulatorpremi.model.Astor.kendaraanModel;
+import beni.simulatorpremi.model.Aspri.aspriModel;
 
 
 public interface BaseApiService {
@@ -30,10 +26,11 @@ public interface BaseApiService {
                                        @Field("password") String password);
 
 
-
     @POST("astor")
     Call<kendaraanModel> postKendaraan(
             @Body kendaraanModel kendaraan);
 
-
+    @POST("aspri")
+    Call<aspriModel> postAspri(
+            @Body aspriModel aspri);
 }

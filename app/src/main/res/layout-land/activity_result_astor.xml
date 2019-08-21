@@ -3,103 +3,125 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/astorlan">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbarid"
-        android:layout_width="741dp"
-        android:layout_height="90dp"
+        android:layout_width="418dp"
+        android:layout_height="53dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:background="@color/trans"
         android:elevation="0dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/mainData"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="238dp"
+            android:layout_width="138dp"
             android:layout_height="195dp"
             android:padding="10dp"
-            android:src="@drawable/jpastor" />
+            android:src="@drawable/astor" />
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout4"
-        android:layout_width="610dp"
+        android:layout_width="583dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/fragmentContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainData">
 
         <Button
             android:id="@+id/bfmin"
-            android:layout_width="500dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="8dp"
+            android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
-            android:textColor="#fff"
-            android:text="Tarif Bawah" />
+            android:text="Tarif Bawah"
+            android:textColor="#fff" />
 
         <Button
             android:id="@+id/bfmax"
-            android:layout_width="500dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/colorPrimaryDark"
-            android:textColor="#fff"
-            android:text="Tarif Atas" />
+            android:text="Tarif Atas"
+            android:textColor="#fff" />
 
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
-        android:layout_width="609dp"
-        android:layout_height="132dp"
+        android:layout_width="584dp"
+        android:layout_height="160dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/bg_text"
+        android:text="TextView"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </FrameLayout>
+        app:layout_constraintHorizontal_bias="0.549"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"></FrameLayout>
 
     <TextView
         android:id="@+id/mainData"
-        android:layout_width="611dp"
-        android:layout_height="80dp"
+        android:layout_width="582dp"
+        android:layout_height="69dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="4dp"
+        android:background="@drawable/bg_text"
         android:text="Beni"
+        android:textColor="@color/colorAccent"
         android:textSize="17sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.541"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbarid" />
+
+    <TextView
+        android:id="@+id/totalpremi"
+        android:layout_width="583dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/bg_text"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragmentContainer" />
 
     <!--  Frame Layout for placing Fragments  -->
 

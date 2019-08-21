@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import beni.simulatorpremi.R;
+import beni.simulatorpremi.fragment.Astor.FragmentMaxPremi;
+import beni.simulatorpremi.fragment.Astor.FragmentMinPremi;
 
 public class ResultAstor2 extends AppCompatActivity {
 

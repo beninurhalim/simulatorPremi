@@ -7,4 +7,7 @@
     <color name="tabtextcolor">#fff</color>
     <color name="buttoncolorastor">#8e0018</color>
     <color name="buttoncoloraspri">#008538</color>
+    <color name="buttoncolor">#11D86C6C</color>
+    <color name="trans">#11D86C6C</color>
+    <color name="astor1">#CA3131</color>
 </resources>
